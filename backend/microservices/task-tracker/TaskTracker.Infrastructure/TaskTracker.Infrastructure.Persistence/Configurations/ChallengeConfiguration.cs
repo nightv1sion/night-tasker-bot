@@ -9,7 +9,7 @@ internal sealed class ChallengeConfiguration : IEntityTypeConfiguration<Challeng
     public void Configure(EntityTypeBuilder<Challenge> builder)
     {
         builder.ToTable(TableName);
-        
+
         builder.HasKey(entity => entity.Id);
 
         builder.Property(entity => entity.Name)
@@ -23,6 +23,6 @@ internal sealed class ChallengeConfiguration : IEntityTypeConfiguration<Challeng
 
         builder.HasIndex(entity => entity.UserId);
     }
-    
+
     public const string TableName = "challenges";
 }

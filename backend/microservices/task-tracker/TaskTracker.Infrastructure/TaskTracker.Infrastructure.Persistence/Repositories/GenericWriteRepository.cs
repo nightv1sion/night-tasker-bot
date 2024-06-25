@@ -1,45 +1,46 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TaskTracker.Core.Domain.Core.Primitives;
 using TaskTracker.Core.Domain.Core.Primitives.Maybe;
+
 namespace TaskTracker.Infrastructure.Persistence.Repositories;
 
 internal class GenericWriteRepository<TEntity>(ApplicationDbContext dbContext) where TEntity : Entity
 {
-    private readonly ApplicationDbContext _dbContext = dbContext;
+    protected readonly ApplicationDbContext DbContext = dbContext;
 
-    public async Task<Maybe<TEntity>> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<TEntity?> TryGetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
-        var entity = await _dbContext.Set<TEntity>().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
-        return Maybe<TEntity>.From(entity!);
+        var entity = await DbContext.Set<TEntity>().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+        return entity;
     }
-    
+
     public async Task InsertAsync(TEntity entity, CancellationToken cancellationToken)
     {
-        await _dbContext.Set<TEntity>().AddAsync(entity, cancellationToken);
+        await DbContext.Set<TEntity>().AddAsync(entity, cancellationToken);
     }
 
     public async Task InsertRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken)
     {
-        await _dbContext.Set<TEntity>().AddRangeAsync(entities, cancellationToken);
+        await DbContext.Set<TEntity>().AddRangeAsync(entities, cancellationToken);
     }
 
-    public void UpdateAsync(TEntity entity)
+    public void Update(TEntity entity)
     {
-        _dbContext.Set<TEntity>().Update(entity);
+        DbContext.Set<TEntity>().Update(entity);
     }
 
-    public void UpdateRangeAsync(IEnumerable<TEntity> entities)
+    public void UpdateRange(IEnumerable<TEntity> entities)
     {
-        _dbContext.Set<TEntity>().UpdateRange(entities);
+        DbContext.Set<TEntity>().UpdateRange(entities);
     }
 
     public void Remove(TEntity entity)
     {
-        _dbContext.Set<TEntity>().Remove(entity);
+        DbContext.Set<TEntity>().Remove(entity);
     }
-    
+
     public void RemoveRange(IEnumerable<TEntity> entities)
     {
-        _dbContext.Set<TEntity>().RemoveRange(entities);
+        DbContext.Set<TEntity>().RemoveRange(entities);
     }
 }

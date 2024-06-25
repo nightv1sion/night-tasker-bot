@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using TaskTracker.Core.Application.Features.Challenges.Commands.CreateChallenge;
+using TaskTracker.Core.Application.Features.Challenges.Commands.UpdateChallenge;
 using TaskTracker.Core.Application.Features.Challenges.Models;
 using TaskTracker.Core.Application.Features.Challenges.Queries.GetUserChallenges;
 using TaskTracker.Presentation.Api.Endpoints.Challenges.Requests;
@@ -18,6 +19,7 @@ public sealed class ChallengeEndpoints : ICarterModule
 
         challengeEndpointsGroup.MapGet("", GetUserChallenges);
         challengeEndpointsGroup.MapPost("", CreateChallenge);
+        challengeEndpointsGroup.MapPut("{challengeId}", UpdateChallenge);
     }
 
     private async Task<Ok<IReadOnlyCollection<ChallengeDto>>> GetUserChallenges(
@@ -37,8 +39,27 @@ public sealed class ChallengeEndpoints : ICarterModule
         var command = new CreateChallengeCommand(request.Name, request.Description, request.UserId);
         var result = await sender.Send(command);
 
-        if (result.IsFailure) return result.ToProblemDetails();
+        if (result.IsFailure)
+        {
+            return result.ToProblemDetails();
+        }
 
         return TypedResults.Ok(result.Value);
+    }
+
+    private async Task<Results<ProblemHttpResult, NoContent>> UpdateChallenge(
+        [FromRoute] Guid challengeId,
+        [FromBody] UpdateChallengeRequest request,
+        [FromServices] ISender sender)
+    {
+        var command = new UpdateChallengeCommand(challengeId, request.Name, request.Description);
+        var result = await sender.Send(command);
+
+        if (result.IsFailure)
+        {
+            return result.ToProblemDetails();
+        }
+
+        return TypedResults.NoContent();
     }
 }

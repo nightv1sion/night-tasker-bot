@@ -22,6 +22,38 @@ namespace TaskTracker.Infrastructure.Persistence.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("TaskTracker.Core.Domain.ChallengeMessages.Entities.ChallengeMessage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<Guid>("ChallengeId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("challenge_id");
+
+                    b.Property<int>("MessageId")
+                        .HasColumnType("integer")
+                        .HasColumnName("message_id");
+
+                    b.Property<DateTimeOffset>("SentAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("sent_at");
+
+                    b.HasKey("Id")
+                        .HasName("pk_challenge_messages");
+
+                    b.HasIndex("ChallengeId")
+                        .HasDatabaseName("ix_challenge_messages_challenge_id");
+
+                    b.HasIndex("MessageId")
+                        .IsUnique()
+                        .HasDatabaseName("ix_challenge_messages_message_id");
+
+                    b.ToTable("challenge_messages", (string)null);
+                });
+
             modelBuilder.Entity("TaskTracker.Core.Domain.Challenges.Entities.Challenge", b =>
                 {
                     b.Property<Guid>("Id")
@@ -30,7 +62,6 @@ namespace TaskTracker.Infrastructure.Persistence.Migrations
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("description");
 
@@ -50,6 +81,18 @@ namespace TaskTracker.Infrastructure.Persistence.Migrations
                         .HasDatabaseName("ix_challenges_user_id");
 
                     b.ToTable("challenges", (string)null);
+                });
+
+            modelBuilder.Entity("TaskTracker.Core.Domain.ChallengeMessages.Entities.ChallengeMessage", b =>
+                {
+                    b.HasOne("TaskTracker.Core.Domain.Challenges.Entities.Challenge", "Challenge")
+                        .WithMany()
+                        .HasForeignKey("ChallengeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_challenge_messages_challenges_challenge_id");
+
+                    b.Navigation("Challenge");
                 });
 #pragma warning restore 612, 618
         }

@@ -11,7 +11,7 @@ internal sealed class GetUserChallengesHandler(IChallengeReadRepository Challeng
         GetUserChallengesQuery request,
         CancellationToken cancellationToken)
     {
-        var challenges = await ChallengeRepository.GetUserChallenges(request.UserId);
+        var challenges = await ChallengeRepository.GetUserChallengesAsync(request.UserId);
         return challenges
             .Select(ChallengeDto.FromEntity)
             .ToArray();

@@ -22,10 +22,20 @@ public sealed class Challenge : AggregateRoot
 
     public string? Description { get; private set; }
 
-    public int UserId { get; private set; }
+    public int UserId { get; set; }
 
     public static Challenge Create(string name, string? description, int userId)
     {
         return new Challenge(name, description, userId);
+    }
+
+    public void UpdateName(string name)
+    {
+        Name = name;
+    }
+
+    public void UpdateDescription(string? description)
+    {
+        Description = description;
     }
 }

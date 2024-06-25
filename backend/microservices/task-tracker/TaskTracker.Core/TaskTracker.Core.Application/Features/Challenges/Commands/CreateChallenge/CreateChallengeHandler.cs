@@ -8,6 +8,7 @@ namespace TaskTracker.Core.Application.Features.Challenges.Commands.CreateChalle
 
 internal sealed class CreateChallengeHandler(
     IChallengeWriteRepository ChallengeWriteRepository,
+    IChallengeReadRepository ChallengeReadRepository,
     IUnitOfWork UnitOfWork) : ICommandHandler<CreateChallengeCommand, Result<Guid>>
 {
     public async Task<Result<Guid>> Handle(CreateChallengeCommand request, CancellationToken cancellationToken)
@@ -15,7 +16,7 @@ internal sealed class CreateChallengeHandler(
         var challenge = Challenge.Create(request.Name, request.Description, request.UserId);
         await ChallengeWriteRepository.InsertAsync(challenge, cancellationToken);
         await UnitOfWork.SaveChangesAsync(cancellationToken);
-        
+
         return Result.Success(challenge.Id);
     }
 }

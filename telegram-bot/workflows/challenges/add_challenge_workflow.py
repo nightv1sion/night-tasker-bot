@@ -1,7 +1,7 @@
 import telebot
 
-from apis.task_tracker_api import TaskTrackerApi
-from models.create_challenge_dto import CreateChallengeDto
+from apis.task_tracker.task_tracker_api import TaskTrackerApi
+from models.challenges.create_challenge_dto import CreateChallengeDto
 
 
 class AddChallengeWorkflow:
@@ -18,6 +18,9 @@ class AddChallengeWorkflow:
         self.challenge = CreateChallengeDto(user_id)
 
     def start(self):
+        self.ask_fields()
+
+    def ask_fields(self):
         self.ask_name()
 
     def ask_name(self):

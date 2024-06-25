@@ -10,9 +10,14 @@ builder.Services
     .AddApplication()
     .AddPersistenceInfrastructure(builder.Configuration);
 
+builder.Services.AddHttpLogging(_ => { });
+
 builder.Services.AddCarter();
 
 var app = builder.Build();
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
+app.UseHttpLogging();
 
 if (app.Environment.IsDevelopment())
 {
