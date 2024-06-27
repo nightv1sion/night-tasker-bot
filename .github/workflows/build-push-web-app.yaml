@@ -28,4 +28,4 @@ jobs:
           context: ./web-app/src/NightPlanner.Blazor
           file: ./web-app/src/NightPlanner.Blazor/NightPlanner.Blazor.Presentation/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_REGISTRY }}/${{ secrets.REGISTRY_USERNAME }}/night-planner-blazor-web-app:latest
+          tags: ${{ secrets.DOCKER_REGISTRY }}//night-planner-blazor-web-app:latest
