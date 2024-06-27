@@ -29,3 +29,4 @@ jobs:
           file: ./web-app/src/NightPlanner.Blazor/NightPlanner.Blazor.Presentation/Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_REGISTRY }}/night-planner-blazor-web-app:latest
+          platform: linux/amd64
