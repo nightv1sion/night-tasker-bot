@@ -1,0 +1,31 @@
+name: "Build & Push Blazor Web App"
+on:
+  push:
+    branches: ["master"]
+    paths: ["web-app/src"]
+  workflow_dispatch:
+jobs:
+  build:
+    name: "Build & Push Blazor Web App"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@v3
+
+      - name: "Set up Docker Buildx"
+        uses: docker/setup-buildx-action@v2
+
+      - name: "Login to GitHub Registry"
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ secrets.DOCKER_REGISTRY }}
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_TOKEN }}
+
+      - name: "Build & Deploy API Gateway"
+        uses: docker/build-push-action@v4
+        with:
+          context: ./web-app/src/NightPlanner.Blazor
+          file: ./web-app/src/NightPlanner.Blazor/NightPlanner.Blazor.Presentation/Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_REGISTRY }}/${{ secrets.REGISTRY_USERNAME }}/night-planner-blazor-web-app:latest
