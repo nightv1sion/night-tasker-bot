@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 jobs:
   build:
-    name: "Build & Push Blazor Web App"
+    name: "Build & Publish Blazor Web App"
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout repository"
@@ -22,7 +22,7 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_TOKEN }}
 
-      - name: "Build & Deploy API Gateway"
+      - name: "Build & Publish Blazor Web App Image"
         uses: docker/build-push-action@v4
         with:
           context: ./web-app/src/NightPlanner.Blazor
