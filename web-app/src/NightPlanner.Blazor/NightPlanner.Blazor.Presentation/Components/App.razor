@@ -13,8 +13,20 @@
 </head>
 
 <body>
-<Routes/>
-<script src="_framework/blazor.web.js"></script>
+<Routes @rendermode=RenderMode.InteractiveServer></Routes>
 </body>
+
+<script src="_framework/blazor.web.js"></script>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script>
+    const textArea = document.getElementById('telegram-init-data')
+    const jsonInit = JSON.stringify(window.Telegram.WebApp.initDataUnsafe)
+    textArea.append(jsonInit)
+
+    function getTelegramInitData() {
+        const json = JSON.stringify(window.Telegram.WebApp.initDataUnsafe)
+        return json;
+    }
+</script>
 
 </html>

@@ -1,3 +1,5 @@
+using NightPlanner.Blazor.Presentation.ApiServices.Contracts;
+using NightPlanner.Blazor.Presentation.ApiServices.Implementations;
 using NightPlanner.Blazor.Presentation.Components;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,7 +8,16 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+builder.Services.AddScoped<IJsInteractor, JsInteractor>();
+builder.Services.AddScoped<ITelegramAuthenticationService, TelegramAuthenticationService>();
+
 var app = builder.Build();
+    
+app.Use(async (httpContext, next) =>
+{
+    var headers = httpContext.Request.Headers.ToList();
+    await next.Invoke();
+});
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
