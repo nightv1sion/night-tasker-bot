@@ -1,5 +1,6 @@
 services:
   night-planner-postgres:
+    container_name: night-planner-postgres
     image: postgres:16
     restart: always
     environment:
@@ -13,6 +14,7 @@ services:
 
   #telegram-web-app:
   night-planner-web-app:
+    container_name: night-planner-web-app
     image: ${DOCKER_REGISTRY}/night-planner-blazor-web-app:latest
     ports:
       - "3000:8080"
@@ -21,6 +23,7 @@ services:
 
   #backend
   night-planner-api-gateway:
+    container_name: night-planner-api-gateway
     image: ${DOCKER_REGISTRY}/night-planner-api-gateway:latest
     ports:
       - "4000:8080"
@@ -28,7 +31,8 @@ services:
       Ocelot__Host: $NIGHT_PLANNER_API_GATEWAY_OCELOT_HOST
 
   night-planner-task-tracker:
-     image: ${DOCKER_REGISTRY}/night-planner-task-tracker:latest
+    container_name: night-planner-task-tracker
+    image: ${DOCKER_REGISTRY}/night-planner-task-tracker:latest
     ports:
       - "5001:8080"
     environment:
