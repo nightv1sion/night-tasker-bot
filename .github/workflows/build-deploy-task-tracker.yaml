@@ -47,14 +47,14 @@ jobs:
           script: |
             sudo su
 
-            docker login ${{ secrets.DOCKER_REGISTRY }} -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.REGISTRY_TOKEN }}
+            sudo docker login ${{ secrets.DOCKER_REGISTRY }} -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.REGISTRY_TOKEN }}
 
-            docker pull ${{ secrets.DOCKER_REGISTRY }}/night-planner-task-tracker:latest
+            sudo docker pull ${{ secrets.DOCKER_REGISTRY }}/night-planner-task-tracker:latest
 
-            docker stop night-planner-task-tracker
+            sudo docker stop night-planner-task-tracker
 
-            docker rm night-planner-task-tracker
+            sudo docker rm night-planner-task-tracker
 
             cd ./docker
 
-            docker compose -f docker-compose.yaml up night-planner-task-tracker -d --build
+            sudo docker compose -f docker-compose.yaml up night-planner-task-tracker -d --build

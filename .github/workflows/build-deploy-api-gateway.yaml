@@ -47,14 +47,14 @@ jobs:
           script: |
             sudo su
 
-            docker login ${{ secrets.DOCKER_REGISTRY }} -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.REGISTRY_TOKEN }}
+            sudo docker login ${{ secrets.DOCKER_REGISTRY }} -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.REGISTRY_TOKEN }}
 
-            docker pull ${{ secrets.DOCKER_REGISTRY }}/night-planner-api-gateway:latest
+            sudo docker pull ${{ secrets.DOCKER_REGISTRY }}/night-planner-api-gateway:latest
 
-            docker stop night-planner-api-gateway
+            sudo docker stop night-planner-api-gateway
 
-            docker rm night-planner-api-gateway
+            sudo docker rm night-planner-api-gateway
 
             cd ./docker
 
-            docker compose -f docker-compose.yaml up night-planner-api-gateway -d --build
+            sudo docker compose -f docker-compose.yaml up night-planner-api-gateway -d --build
