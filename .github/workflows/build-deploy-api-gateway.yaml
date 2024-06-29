@@ -57,4 +57,4 @@ jobs:
 
             cd ./docker
 
-            sudo docker compose -f docker-compose.yaml up night-planner-api-gateway -d --build
+            sudo docker compose -e DOCKER_REGISTRY=${{ secrets.DOCKER_REGISTRY }} -f docker-compose.yaml up night-planner-api-gateway -d --build
