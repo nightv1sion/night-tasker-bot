@@ -13,4 +13,9 @@
       </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Refit" Version="7.1.1" />
+      <PackageReference Include="Refit.HttpClientFactory" Version="7.1.1" />
+    </ItemGroup>
+
 </Project>

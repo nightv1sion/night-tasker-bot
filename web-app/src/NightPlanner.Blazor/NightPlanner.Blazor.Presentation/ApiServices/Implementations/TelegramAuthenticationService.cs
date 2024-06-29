@@ -14,14 +14,14 @@ internal sealed class TelegramAuthenticationService : ITelegramAuthenticationSer
         _jsInteractor = jsInteractor ?? throw new ArgumentNullException(nameof(jsInteractor));
     }
     
-    public async Task<TelegramUser> GetTelegramUser()
+    public async Task<TelegramUser> GetTelegramUser(CancellationToken cancellationToken)
     {
         if (_user is not null)
         {
             return _user;
         }
         
-        var initData = await _jsInteractor.GetUserInitData();
+        var initData = await _jsInteractor.GetUserInitData(cancellationToken);
         var initDataObject = JsonSerializer.Deserialize<TelegramInitData>(initData, new JsonSerializerOptions()
         {
             PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
@@ -34,5 +34,11 @@ internal sealed class TelegramAuthenticationService : ITelegramAuthenticationSer
         
         _user = initDataObject.User;
         return _user;
+    }
+
+    public async Task<int> GetTelegramUserId(CancellationToken cancellationToken)
+    {
+        var user = await GetTelegramUser(cancellationToken);
+        return user.Id;
     }
 }

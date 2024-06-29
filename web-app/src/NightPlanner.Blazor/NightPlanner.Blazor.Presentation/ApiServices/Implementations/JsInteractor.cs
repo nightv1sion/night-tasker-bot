@@ -11,8 +11,8 @@ internal sealed class JsInteractor : IJsInteractor
     {
         _jsRuntime = jsRuntime ?? throw new ArgumentNullException(nameof(jsRuntime));
     }
-    public async Task<string> GetUserInitData()
+    public async Task<string> GetUserInitData(CancellationToken cancellationToken)
     {
-        return await _jsRuntime.InvokeAsync<string>("getTelegramInitData");
+        return await _jsRuntime.InvokeAsync<string>("getTelegramInitData", cancellationToken);
     }
 }

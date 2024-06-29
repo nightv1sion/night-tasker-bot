@@ -1,7 +1,11 @@
 ﻿@page "/"
+@using NightPlanner.Blazor.Presentation.ApiClients.TaskTracker
+@using NightPlanner.Blazor.Presentation.ApiClients.TaskTracker.Requests
+@using NightPlanner.Blazor.Presentation.ApiClients.TaskTracker.Responses
 @using NightPlanner.Blazor.Presentation.ApiServices.Contracts
 @using NightPlanner.Blazor.Presentation.Models
 @inject ITelegramAuthenticationService TelegramAuthenticationService
+@inject IChallengesApi ChallengesApi
 <PageTitle>Home</PageTitle>
 
 @if (_user is not null)
@@ -14,11 +18,55 @@ Welcome to your new app.
 
 <button @onclick="LoadUserId">load user</button>
 
+<div>
+    <div>
+        <input @bind="_taskName" placeholder="Введите название задачи"/>
+    </div>
+    
+    <div>
+        <input @bind="_taskDesc" placeholder="Введите описание задачи"/>
+    </div>
+
+    <div>
+        <button @onclick="CreateChallenge">Отправить</button>
+    </div>
+
+</div>
+
+<div>
+    <button @onclick="LoadChallenges">Загрузить</button>
+    
+    @foreach (var challenge in _challenges)
+    {
+        <div><b>@challenge.Name</b> - @challenge.Description</div>
+    }
+</div>
+
 @code {
     private TelegramUser? _user;
-
+    private string? _taskName;
+    private string? _taskDesc;
+    private IReadOnlyCollection<ChallengeResponse> _challenges = Array.Empty<ChallengeResponse>();
+    
     private async Task LoadUserId()
     {
         _user = await TelegramAuthenticationService.GetTelegramUser();
+    }
+
+    private async Task CreateChallenge()
+    {
+        var challenge = new CreateChallengeRequest
+        {
+            UserId = await TelegramAuthenticationService.GetTelegramUserId(),
+            Name = _taskName!,
+            Description = _taskDesc
+        };
+        await ChallengesApi.CreateChallenge(challenge);
+    }
+
+    private async Task LoadChallenges()
+    {
+        var userId = await TelegramAuthenticationService.GetTelegramUserId();
+        _challenges = await ChallengesApi.GetChallenges(userId);
     }
 }

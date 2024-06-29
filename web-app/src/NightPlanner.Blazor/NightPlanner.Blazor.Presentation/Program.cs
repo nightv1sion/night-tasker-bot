@@ -1,6 +1,8 @@
+using NightPlanner.Blazor.Presentation.ApiClients.TaskTracker;
 using NightPlanner.Blazor.Presentation.ApiServices.Contracts;
 using NightPlanner.Blazor.Presentation.ApiServices.Implementations;
 using NightPlanner.Blazor.Presentation.Components;
+using Refit;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +12,9 @@ builder.Services.AddRazorComponents()
 
 builder.Services.AddScoped<IJsInteractor, JsInteractor>();
 builder.Services.AddScoped<ITelegramAuthenticationService, TelegramAuthenticationService>();
+
+builder.Services.AddRefitClient<IChallengesApi>()
+    .ConfigureHttpClient(client => client.BaseAddress = new Uri(builder.Configuration["ApiPaths:ApiGateway"]!));
 
 var app = builder.Build();
     
