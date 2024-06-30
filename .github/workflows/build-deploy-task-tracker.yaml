@@ -2,7 +2,7 @@ name: "Build & Push Task Tracker"
 on:
   push:
     branches: ["master"]
-    paths: ["backend/src/microservices/task-tracker/**"]
+    paths: ["backend/microservices/task-tracker/**"]
   workflow_dispatch:
 jobs:
   build:

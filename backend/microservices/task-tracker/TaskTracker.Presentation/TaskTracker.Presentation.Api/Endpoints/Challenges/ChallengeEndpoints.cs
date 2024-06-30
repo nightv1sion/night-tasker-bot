@@ -19,7 +19,7 @@ public sealed class ChallengeEndpoints : ICarterModule
 
         challengeEndpointsGroup.MapGet("", GetUserChallenges);
         challengeEndpointsGroup.MapPost("", CreateChallenge);
-        challengeEndpointsGroup.MapPut("{challengeId}", UpdateChallenge);
+        challengeEndpointsGroup.MapPut("{challengeId:guid}", UpdateChallenge);
     }
 
     private async Task<Ok<IReadOnlyCollection<ChallengeDto>>> GetUserChallenges(
