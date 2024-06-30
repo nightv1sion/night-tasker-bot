@@ -51,9 +51,7 @@ jobs:
 
             sudo docker pull ${{ secrets.DOCKER_REGISTRY }}/night-planner-task-tracker:latest
 
-            sudo docker stop night-planner-task-tracker
-
-            sudo docker rm night-planner-task-tracker
+            sudo docker compose rm -s night-planner-task-tracker
 
             cd ./docker
 

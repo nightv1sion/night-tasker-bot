@@ -51,9 +51,7 @@ jobs:
 
             sudo docker pull ${{ secrets.DOCKER_REGISTRY }}/night-planner-api-gateway:latest
 
-            sudo docker stop night-planner-api-gateway
-
-            sudo docker rm night-planner-api-gateway
+            sudo docker compose rm -s night-planner-api-gateway
 
             cd ./docker
 
