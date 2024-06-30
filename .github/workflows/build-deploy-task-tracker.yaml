@@ -26,7 +26,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: ./backend/microservices/task-tracker
-          file: ./backend/microservices/task-tracker/TaskTracker.Presentation/Dockerfile
+          file: ./backend/microservices/task-tracker/TaskTracker.Presentation/TaskTracker.Presentation.Api/Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_REGISTRY }}/night-planner-task-tracker:latest
           platforms: linux/amd64
