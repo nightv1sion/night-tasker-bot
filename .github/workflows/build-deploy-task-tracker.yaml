@@ -51,8 +51,8 @@ jobs:
 
             sudo docker pull ${{ secrets.DOCKER_REGISTRY }}/night-planner-task-tracker:latest
 
-            sudo docker compose rm -s night-planner-task-tracker
-
             cd ./docker
 
-            sudo docker compose -e DOCKER_REGISTRY=${{ secrets.DOCKER_REGISTRY }} -f docker-compose.yaml up night-planner-task-tracker -d
+            sudo docker compose -f docker-compose.yaml rm -s night-planner-task-tracker
+
+            sudo docker compose -f docker-compose.yaml up night-planner-task-tracker -d
