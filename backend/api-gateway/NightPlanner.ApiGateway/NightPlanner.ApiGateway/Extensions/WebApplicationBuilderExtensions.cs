@@ -25,13 +25,13 @@ public static class WebApplicationBuilderExtensions
         
         if (builder.Environment.IsProduction())
         {
-            ocelotPath = "ocelot.production.json";
-            builder.BuildOcelotJson(ocelotPath);
+            ocelotPath = Path.Combine(builder.Environment.ContentRootPath, "ocelot.production.json");
         }
         else
         {
-            ocelotPath = "ocelot.development.json";
+            ocelotPath = Path.Combine(builder.Environment.ContentRootPath, "ocelot.development.json");
         }
+
         
         builder.Configuration.AddJsonFile(
             ocelotPath, 
