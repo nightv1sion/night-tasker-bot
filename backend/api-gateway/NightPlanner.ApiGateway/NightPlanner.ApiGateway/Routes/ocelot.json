@@ -7,7 +7,7 @@
       "DownstreamPathTemplate": "/api/challenges",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [{
-        "Host": "localhost",
+        "Host": "{HOST}",
         "Port": 5001
       }]
     },
@@ -17,7 +17,7 @@
       "DownstreamPathTemplate": "/api/challenges/{challengeId}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [{
-        "Host": "localhost",
+        "Host": "{HOST}",
         "Port": 5001
       }]
     }

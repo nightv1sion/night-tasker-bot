@@ -1,3 +1,4 @@
+using System.Text;
 using Ocelot.DependencyInjection;
 using Serilog;
 
@@ -21,28 +22,22 @@ public static class WebApplicationBuilderExtensions
 
     private static void ConfigureOcelot(this WebApplicationBuilder builder)
     {
-        string ocelotPath;
-        
-        if (builder.Environment.IsProduction())
-        {
-            ocelotPath = Path.Combine(builder.Environment.ContentRootPath, "ocelot.production.json");
-        }
-        else
-        {
-            ocelotPath = Path.Combine(builder.Environment.ContentRootPath, "ocelot.development.json");
-        }
+        string ocelotPath = Path.Combine(
+            Directory.GetCurrentDirectory(),
+            builder.Configuration["Ocelot:SourceFile"]!);
+        string host = builder.Configuration["Ocelot:Host"]!;
 
-        
-        builder.Configuration.AddJsonFile(
-            ocelotPath, 
-            optional: false,
-            reloadOnChange: true);
+        MemoryStream ocelotJson = BuildOcelotJson(ocelotPath, host);
+
+        builder.Configuration.AddJsonStream(ocelotJson);
     }
 
-    private static void BuildOcelotJson(this WebApplicationBuilder builder, string ocelotPath)
+    private static MemoryStream BuildOcelotJson(
+        string ocelotPath,
+        string host)
     {
-        var ocelot = File.ReadAllText(ocelotPath);
-        var result = ocelot.Replace("{HOST}", builder.Configuration["Ocelot:Host"]);
-        File.WriteAllText(ocelotPath, result);
+        string ocelotJson = File.ReadAllText(ocelotPath);
+        ocelotJson = ocelotJson.Replace("{HOST}", host);
+        return new MemoryStream(Encoding.UTF8.GetBytes(ocelotJson));
     }
 }
