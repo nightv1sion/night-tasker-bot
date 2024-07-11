@@ -1,0 +1,61 @@
+@using NightPlanner.Blazor.Presentation.ApiClients.TaskTracker
+@using NightPlanner.Blazor.Presentation.ApiClients.TaskTracker.Requests
+@using NightPlanner.Blazor.Presentation.ApiServices.Contracts
+@inject ITelegramAuthenticationService TelegramAuthenticationService
+@inject IChallengesApi ChallengesApi
+
+<Modal @ref="modal" Title="Добавить план">
+    <BodyTemplate>
+        <div class="mb-3">
+            <input placeholder="Название плана" @bind="Challenge.Name"/>
+        </div>
+        <div class="mb-3">
+            <input placeholder="Описание плана" @bind="Challenge.Description"/>
+        </div>
+    </BodyTemplate>
+    <FooterTemplate>
+        <Button Color="ButtonColor.Secondary" @onclick="OnHideModalClick">Отмена</Button>
+        <Button Color="ButtonColor.Primary" @onclick="CreateChallenge">Сохранить</Button>
+    </FooterTemplate>
+</Modal>
+
+<Button Color="ButtonColor.Primary" @onclick="OnShowModalClick">Добавить</Button>
+
+@code {
+    [Parameter]
+    public required Func<Task> OnChallengeCreated { get; set; }
+
+    private Modal modal = default!;
+
+    private CreateChallengeDto Challenge = new();
+    
+    private async Task OnShowModalClick()
+    {
+        await modal.ShowAsync();
+    }
+
+    private async Task OnHideModalClick()
+    {
+        await modal.HideAsync();
+    }
+
+    sealed class CreateChallengeDto
+    {
+        public string? Name { get; set; }
+        
+        public string? Description { get; set; }
+    }
+
+    private async Task CreateChallenge()
+    {
+        var challenge = new CreateChallengeRequest
+        {
+            UserId = await TelegramAuthenticationService.GetTelegramUserId(),
+            Name = Challenge.Name!,
+            Description = Challenge.Description
+        };
+        await ChallengesApi.CreateChallenge(challenge);
+        await OnChallengeCreated();
+        await modal.HideAsync();
+    }
+}

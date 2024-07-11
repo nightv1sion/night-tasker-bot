@@ -4,3 +4,4 @@
 *.DotSettings.user
 **/venv
 **/.env
+**/.vs

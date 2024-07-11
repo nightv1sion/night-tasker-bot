@@ -4,42 +4,22 @@
 @using NightPlanner.Blazor.Presentation.ApiClients.TaskTracker.Responses
 @using NightPlanner.Blazor.Presentation.ApiServices.Contracts
 @using NightPlanner.Blazor.Presentation.Models
+@using NightPlanner.Blazor.Presentation.Components.Modals.Challenges
 @inject ITelegramAuthenticationService TelegramAuthenticationService
 @inject IChallengesApi ChallengesApi
 <PageTitle>Home</PageTitle>
 
-@if (_user is not null)
-{
-    <h1>Hello, @_user.FirstName @_user.LastName!</h1>
-}
-Welcome to your new app.
-
-<textarea id="telegram-init-data" cols="35"></textarea>
-
-<button @onclick="LoadUserId">load user</button>
-
-<div>
-    <div>
-        <input @bind="_taskName" placeholder="Введите название задачи"/>
-    </div>
-    
-    <div>
-        <input @bind="_taskDesc" placeholder="Введите описание задачи"/>
-    </div>
-
-    <div>
-        <button @onclick="CreateChallenge">Отправить</button>
-    </div>
-
-</div>
-
 <div>
     <button @onclick="LoadChallenges">Загрузить</button>
-    
+
     @foreach (var challenge in _challenges)
     {
         <div><b>@challenge.Name</b> - @challenge.Description</div>
     }
+</div>
+
+<div>
+    <CreateModalForm OnChallengeCreated="LoadChallenges"/>
 </div>
 
 @code {
@@ -68,5 +48,17 @@ Welcome to your new app.
     {
         var userId = await TelegramAuthenticationService.GetTelegramUserId();
         _challenges = await ChallengesApi.GetChallenges(userId);
+        StateHasChanged();
     }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+
+        if (firstRender)
+        {
+            await LoadChallenges();
+        }
+    }
+
 }

@@ -16,6 +16,8 @@ builder.Services.AddScoped<ITelegramAuthenticationService, TelegramAuthenticatio
 builder.Services.AddRefitClient<IChallengesApi>()
     .ConfigureHttpClient(client => client.BaseAddress = new Uri(builder.Configuration["ApiPaths:ApiGateway"]!));
 
+builder.Services.AddBlazorBootstrap();
+
 var app = builder.Build();
     
 app.Use(async (httpContext, next) =>
