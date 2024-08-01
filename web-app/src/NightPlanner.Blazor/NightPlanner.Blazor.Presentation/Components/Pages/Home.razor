@@ -1,53 +1,47 @@
 ﻿@page "/"
 @using NightPlanner.Blazor.Presentation.ApiClients.TaskTracker
-@using NightPlanner.Blazor.Presentation.ApiClients.TaskTracker.Requests
-@using NightPlanner.Blazor.Presentation.ApiClients.TaskTracker.Responses
 @using NightPlanner.Blazor.Presentation.ApiServices.Contracts
-@using NightPlanner.Blazor.Presentation.Models
 @using NightPlanner.Blazor.Presentation.Components.Modals.Challenges
+@using NightPlanner.Blazor.Presentation.Components.Lists
+@using NightPlanner.Blazor.Presentation.Models.Challenges
 @inject ITelegramAuthenticationService TelegramAuthenticationService
 @inject IChallengesApi ChallengesApi
 <PageTitle>Home</PageTitle>
 
-<div>
-    <button @onclick="LoadChallenges">Загрузить</button>
+<div class="w-100 px-1">
+        <div>
+            <ChallengesList Challenges="_challenges"/>
+        </div>
 
-    @foreach (var challenge in _challenges)
-    {
-        <div><b>@challenge.Name</b> - @challenge.Description</div>
-    }
-</div>
-
-<div>
-    <CreateModalForm OnChallengeCreated="LoadChallenges"/>
+        <div class="d-flex">
+            <div class="mx-auto mt-2">
+                <CreateModalForm OnChallengeCreated="LoadChallenges"/>
+            </div>
+        </div>
 </div>
 
 @code {
-    private TelegramUser? _user;
-    private string? _taskName;
-    private string? _taskDesc;
-    private IReadOnlyCollection<ChallengeResponse> _challenges = Array.Empty<ChallengeResponse>();
+    [Inject]
+    protected PreloadService PreloadService { get; set; }
     
-    private async Task LoadUserId()
-    {
-        _user = await TelegramAuthenticationService.GetTelegramUser();
-    }
+    private IReadOnlyCollection<ChallengeDto> _challenges = Array.Empty<ChallengeDto>();
 
-    private async Task CreateChallenge()
-    {
-        var challenge = new CreateChallengeRequest
-        {
-            UserId = await TelegramAuthenticationService.GetTelegramUserId(),
-            Name = _taskName!,
-            Description = _taskDesc
-        };
-        await ChallengesApi.CreateChallenge(challenge);
-    }
-
+    private bool _challengesLoading = false;
+    
     private async Task LoadChallenges()
     {
         var userId = await TelegramAuthenticationService.GetTelegramUserId();
-        _challenges = await ChallengesApi.GetChallenges(userId);
+        
+        PreloadService.Show();
+        
+        var challenges = await ChallengesApi.GetChallenges(userId);
+        _challenges = challenges
+            .Select(x => new ChallengeDto(x.Id, x.Name, x.Description))
+            .ToArray();
+        
+        PreloadService.Hide();
+
+        
         StateHasChanged();
     }
 
