@@ -1,4 +1,4 @@
-﻿using Challenges.Domain.Core.Primitives;
+﻿using Planner.Common.Domain.Core.Primitives;
 using Microsoft.EntityFrameworkCore;
 using Planner.Challenges.Infrastructure;
 using TaskTracker.Core.Domain.Core.Primitives.Maybe;

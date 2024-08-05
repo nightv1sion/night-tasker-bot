@@ -1,5 +1,5 @@
 using Challenges.Domain.Challenges.Repositories;
-using Planner.Challenges.Application.Abstractions.Messaging;
+using Planner.Common.Application.Messaging;
 using Planner.Challenges.Application.Features.Challenges.Models;
 
 namespace Planner.Challenges.Application.Features.Challenges.Queries.GetUserChallenges;

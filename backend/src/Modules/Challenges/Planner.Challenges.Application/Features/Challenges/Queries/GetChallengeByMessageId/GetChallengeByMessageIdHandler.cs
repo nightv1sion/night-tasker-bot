@@ -1,7 +1,7 @@
 using Challenges.Domain.ChallengeMessages.Errors;
 using Challenges.Domain.Challenges.Repositories;
-using Challenges.Domain.Core.Primitives.Result;
-using Planner.Challenges.Application.Abstractions.Messaging;
+using Planner.Common.Domain.Core.Primitives.Result;
+using Planner.Common.Application.Messaging;
 using Planner.Challenges.Application.Features.Challenges.Models;
 
 namespace Planner.Challenges.Application.Features.Challenges.Queries.GetChallengeByMessageId;

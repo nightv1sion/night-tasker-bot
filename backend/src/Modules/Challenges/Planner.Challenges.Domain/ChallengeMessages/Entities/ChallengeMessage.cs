@@ -1,9 +1,9 @@
 using Planner.Challenges.Domain.Challenges.Entities;
-using Planner.Challenges.Domain.Core.Primitives;
+using Planner.Common.Domain.Core.Primitives;
 
 namespace Planner.Challenges.Domain.ChallengeMessages.Entities;
 
-public sealed class ChallengeMessage : AggregateRoot
+public sealed class ChallengeMessage : Entity
 {
     private ChallengeMessage()
     {

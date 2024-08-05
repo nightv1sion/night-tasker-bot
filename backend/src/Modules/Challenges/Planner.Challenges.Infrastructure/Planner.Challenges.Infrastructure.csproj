@@ -15,6 +15,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\..\Common\Planner.Common.Infrastructure\Planner.Common.Infrastructure.csproj" />
         <ProjectReference Include="..\Planner.Challenges.Application\Planner.Challenges.Application.csproj" />
     </ItemGroup>
     

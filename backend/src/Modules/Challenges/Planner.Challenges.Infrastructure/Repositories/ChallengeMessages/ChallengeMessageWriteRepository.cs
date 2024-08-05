@@ -1,5 +1,5 @@
-using Challenges.Domain.ChallengeMessages.Entities;
-using Challenges.Domain.ChallengeMessages.Repositories;
+using Planner.Challenges.Domain.ChallengeMessages.Entities;
+using Planner.Challenges.Domain.ChallengeMessages.Repositories;
 
 namespace Planner.Challenges.Infrastructure.Repositories.ChallengeMessages;
 

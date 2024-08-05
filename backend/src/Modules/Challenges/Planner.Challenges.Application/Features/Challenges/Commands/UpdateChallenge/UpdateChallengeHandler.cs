@@ -1,8 +1,8 @@
 using Challenges.Domain.Challenges.Errors;
 using Challenges.Domain.Challenges.Repositories;
-using Challenges.Domain.Core.Primitives.Result;
+using Planner.Common.Domain.Core.Primitives.Result;
 using Planner.Challenges.Application.Abstractions.Data;
-using Planner.Challenges.Application.Abstractions.Messaging;
+using Planner.Common.Application.Messaging;
 
 namespace Planner.Challenges.Application.Features.Challenges.Commands.UpdateChallenge;
 

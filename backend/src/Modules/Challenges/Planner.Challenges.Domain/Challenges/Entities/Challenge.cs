@@ -1,4 +1,4 @@
-using Planner.Challenges.Domain.Core.Primitives;
+using Planner.Common.Domain.Core.Primitives;
 
 namespace Planner.Challenges.Domain.Challenges.Entities;
 

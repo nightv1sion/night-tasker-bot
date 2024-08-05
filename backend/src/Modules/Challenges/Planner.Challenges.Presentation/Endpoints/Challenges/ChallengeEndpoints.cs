@@ -1,21 +1,16 @@
 using Carter;
-using Challenges.Application.Features.Challenges.Models;
 using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Planner.Challenges.Presentation.Endpoints.Challenges.Requests;
-using TaskTracker.Core.Application.Features.Challenges.Commands.CreateChallenge;
-using TaskTracker.Core.Application.Features.Challenges.Commands.UpdateChallenge;
-using TaskTracker.Core.Application.Features.Challenges.Queries.GetUserChallenges;
-using TaskTracker.Presentation.Api.Extensions;
 
 namespace Planner.Challenges.Presentation.Endpoints.Challenges;
 
-public sealed class ChallengeEndpoints : ICarterModule
+public sealed class ChallengeEndpoints
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public static void AddRoutes(IEndpointRouteBuilder app)
     {
-        var challengeEndpointsGroup = app.MapGroup("api/challenges");
+        RouteGroupBuilder challengeEndpointsGroup = app.MapGroup("api/challenges");
 
         challengeEndpointsGroup.MapGet("", GetUserChallenges);
         challengeEndpointsGroup.MapPost("", CreateChallenge);

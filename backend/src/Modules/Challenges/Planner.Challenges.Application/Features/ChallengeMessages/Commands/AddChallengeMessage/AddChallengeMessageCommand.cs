@@ -1,5 +1,5 @@
-using Challenges.Domain.Core.Primitives.Result;
-using Planner.Challenges.Application.Abstractions.Messaging;
+using Planner.Common.Domain.Core.Primitives.Result;
+using Planner.Common.Application.Messaging;
 using Planner.Challenges.Application.Features.ChallengeMessages.Models;
 
 namespace Planner.Challenges.Application.Features.ChallengeMessages.Commands.AddChallengeMessage;

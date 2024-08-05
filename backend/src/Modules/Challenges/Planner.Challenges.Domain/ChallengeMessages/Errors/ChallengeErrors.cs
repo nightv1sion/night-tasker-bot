@@ -1,6 +1,5 @@
 using Planner.Challenges.Domain.Challenges.Entities;
-using Planner.Challenges.Domain.Core.Primitives;
-using TaskTracker.Core.Domain.Challenges.Errors;
+using Planner.Common.Domain.Core.Primitives;
 
 namespace Planner.Challenges.Domain.ChallengeMessages.Errors;
 

@@ -9,7 +9,7 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["TaskTracker.Presentation/TaskTracker.Presentation.Api/TaskTracker.Presentation.Api.csproj", "TaskTracker.Presentation/TaskTracker.Presentation.Api/"]
 COPY ["TaskTracker.Infrastructure/TaskTracker.Infrastructure.Persistence/TaskTracker.Infrastructure.Persistence.csproj", "TaskTracker.Infrastructure/TaskTracker.Infrastructure.Persistence/"]
-COPY ["TaskTracker.Core/TaskTracker.Core.Application/TaskTracker.Core.Application.csproj", "TaskTracker.Core/TaskTracker.Core.Application/"]
+COPY ["TaskTracker.Core/Planner.Challenges.Application/Planner.Challenges.Application.csproj", "TaskTracker.Core/Planner.Challenges.Application/"]
 COPY ["TaskTracker.Core/TaskTracker.Core.Domain/TaskTracker.Core.Domain.csproj", "TaskTracker.Core/TaskTracker.Core.Domain/"]
 RUN dotnet restore "TaskTracker.Presentation/TaskTracker.Presentation.Api/TaskTracker.Presentation.Api.csproj"
 COPY . .

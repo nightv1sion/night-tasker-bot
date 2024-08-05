@@ -1,5 +1,5 @@
 using Planner.Challenges.Domain.Challenges.Entities;
-using Planner.Challenges.Domain.Core.Primitives;
+using Evently.Primitives;
 
 namespace Planner.Challenges.Domain.Challenges.Errors;
 

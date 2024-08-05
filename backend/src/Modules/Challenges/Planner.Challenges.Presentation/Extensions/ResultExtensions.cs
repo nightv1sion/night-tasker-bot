@@ -1,5 +1,5 @@
-﻿using Challenges.Domain.Core.Primitives;
-using Challenges.Domain.Core.Primitives.Result;
+﻿using Planner.Common.Domain.Core.Primitives;
+using Planner.Common.Domain.Core.Primitives.Result;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Planner.Challenges.Presentation.Extensions;
 

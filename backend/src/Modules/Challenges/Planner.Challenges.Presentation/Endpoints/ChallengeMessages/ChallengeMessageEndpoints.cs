@@ -4,17 +4,17 @@ using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Planner.Challenges.Presentation.Endpoints.ChallengeMessages.Requests;
-using TaskTracker.Core.Application.Features.ChallengeMessages.Commands.AddChallengeMessage;
-using TaskTracker.Core.Application.Features.Challenges.Queries.GetChallengeByMessageId;
+using Planner.Challenges.Application.Features.ChallengeMessages.Commands.AddChallengeMessage;
+using Planner.Challenges.Application.Features.Challenges.Queries.GetChallengeByMessageId;
 using TaskTracker.Presentation.Api.Extensions;
 
 namespace Planner.Challenges.Presentation.Endpoints.ChallengeMessages;
 
 public sealed class ChallengeMessageEndpoints : ICarterModule
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public static void AddRoutes(IEndpointRouteBuilder app)
     {
-        var challengeMessageEndpointsGroup = app.MapGroup("api/challenge-messages");
+        RouteGroupBuilder challengeMessageEndpointsGroup = app.MapGroup("api/challenge-messages");
 
         challengeMessageEndpointsGroup.MapPost("", AddChallengeMessages);
         challengeMessageEndpointsGroup.MapGet("{messageId}", GetChallengeByMessageId);

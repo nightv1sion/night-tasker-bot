@@ -1,4 +1,4 @@
-﻿using Challenges.Application.Abstractions.Data;
+﻿using Planner.Challenges.Application.Abstractions.Data;
 
 namespace Planner.Challenges.Infrastructure;
 
