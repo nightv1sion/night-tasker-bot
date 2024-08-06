@@ -1,17 +1,15 @@
 ﻿using Planner.Common.Domain.Core.Primitives;
 using Microsoft.EntityFrameworkCore;
-using Planner.Challenges.Infrastructure;
-using TaskTracker.Core.Domain.Core.Primitives.Maybe;
 
 namespace Planner.Challenges.Infrastructure.Repositories;
 
-internal class GenericWriteRepository<TEntity>(ApplicationDbContext dbContext) where TEntity : Entity
+internal class GenericWriteRepository<TEntity>(ChallengesDbContext dbContext) where TEntity : Entity
 {
-    protected readonly ApplicationDbContext DbContext = dbContext;
+    protected readonly ChallengesDbContext DbContext = dbContext;
 
     public async Task<TEntity?> TryGetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
-        var entity = await DbContext.Set<TEntity>().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+        TEntity? entity = await DbContext.Set<TEntity>().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
         return entity;
     }
 

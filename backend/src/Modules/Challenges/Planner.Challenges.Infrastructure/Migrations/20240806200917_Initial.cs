@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace TaskTracker.Infrastructure.Persistence.Migrations
+namespace Planner.Challenges.Infrastructure.Migrations
 {
     /// <inheritdoc />
     public partial class Initial : Migration
@@ -11,8 +11,12 @@ namespace TaskTracker.Infrastructure.Persistence.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "challenges");
+
             migrationBuilder.CreateTable(
                 name: "challenges",
+                schema: "challenges",
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -27,6 +31,7 @@ namespace TaskTracker.Infrastructure.Persistence.Migrations
 
             migrationBuilder.CreateTable(
                 name: "challenge_messages",
+                schema: "challenges",
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -40,6 +45,7 @@ namespace TaskTracker.Infrastructure.Persistence.Migrations
                     table.ForeignKey(
                         name: "fk_challenge_messages_challenges_challenge_id",
                         column: x => x.challenge_id,
+                        principalSchema: "challenges",
                         principalTable: "challenges",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
@@ -47,17 +53,20 @@ namespace TaskTracker.Infrastructure.Persistence.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "ix_challenge_messages_challenge_id",
+                schema: "challenges",
                 table: "challenge_messages",
                 column: "challenge_id");
 
             migrationBuilder.CreateIndex(
                 name: "ix_challenge_messages_message_id",
+                schema: "challenges",
                 table: "challenge_messages",
                 column: "message_id",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "ix_challenges_user_id",
+                schema: "challenges",
                 table: "challenges",
                 column: "user_id");
         }
@@ -66,10 +75,12 @@ namespace TaskTracker.Infrastructure.Persistence.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "challenge_messages");
+                name: "challenge_messages",
+                schema: "challenges");
 
             migrationBuilder.DropTable(
-                name: "challenges");
+                name: "challenges",
+                schema: "challenges");
         }
     }
 }

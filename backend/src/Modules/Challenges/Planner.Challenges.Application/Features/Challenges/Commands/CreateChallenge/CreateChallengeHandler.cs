@@ -1,5 +1,5 @@
-using Challenges.Domain.Challenges.Entities;
-using Challenges.Domain.Challenges.Repositories;
+using Planner.Challenges.Domain.Challenges.Entities;
+using Planner.Challenges.Domain.Challenges.Repositories;
 using Planner.Common.Domain.Core.Primitives.Result;
 using Planner.Challenges.Application.Abstractions.Data;
 using Planner.Common.Application.Messaging;
@@ -8,7 +8,6 @@ namespace Planner.Challenges.Application.Features.Challenges.Commands.CreateChal
 
 internal sealed class CreateChallengeHandler(
     IChallengeWriteRepository ChallengeWriteRepository,
-    IChallengeReadRepository ChallengeReadRepository,
     IUnitOfWork UnitOfWork) : ICommandHandler<CreateChallengeCommand, Result<Guid>>
 {
     public async Task<Result<Guid>> Handle(CreateChallengeCommand request, CancellationToken cancellationToken)

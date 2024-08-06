@@ -1,0 +1,33 @@
+version: '3.9'
+
+services:
+  planner.api:
+    image: ${DOCKER_REGISTRY-}plannerapi
+    container_name: Planner.Api
+    build:
+      context: .
+      dockerfile: API/Planner.Api/Dockerfile
+    ports:
+      - 5000:8080
+      - 5001:8081
+
+  planner.database:
+    image: postgres:latest
+    container_name: Planner.Database
+    environment:
+      - POSTGRES_DB=planner
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./.containers/db:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+  planner.seq:
+    image: datalust/seq:latest
+    container_name: Planner.Seq
+    environment:
+      - ACCEPT_EULA=Y
+    ports:
+      - 5341:5341
+      - 8081:80

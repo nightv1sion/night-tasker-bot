@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Planner.Challenges.Application.Abstractions.Data;
+﻿using Microsoft.AspNetCore.Routing;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Planner.Challenges.Presentation.Endpoints.ChallengeMessages;
 using Planner.Challenges.Presentation.Endpoints.Challenges;
-using Planner.Common.Infrastructure;
 
 namespace Planner.Challenges.Presentation;
 
@@ -18,7 +19,9 @@ public static class ChallengesModule
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        InfrastructureConfiguration.AddInfrastructure(services, configuration.GetConnectionString("Database")!);
+        Common.Infrastructure.InfrastructureConfiguration.AddInfrastructure(services, configuration.GetConnectionString("Database")!);
+
+        Infrastructure.InfrastructureConfiguration.AddInfrastructure(services, configuration);
 
         return services;
     }

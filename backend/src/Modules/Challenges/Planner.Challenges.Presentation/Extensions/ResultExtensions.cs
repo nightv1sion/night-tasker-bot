@@ -1,7 +1,7 @@
 ﻿using Planner.Common.Domain.Core.Primitives;
 using Planner.Common.Domain.Core.Primitives.Result;
 using Microsoft.AspNetCore.Http.HttpResults;
-using Planner.Challenges.Presentation.Extensions;
+using Microsoft.AspNetCore.Http;
 
 namespace Planner.Challenges.Presentation.Extensions;
 
@@ -14,7 +14,7 @@ internal static class ResultExtensions
             throw new InvalidOperationException();
         }
 
-        var errorType = result.Error!.Type;
+        ErrorType errorType = result.Error!.Type;
 
         return TypedResults.Problem(
             statusCode: errorType.GetStatusCode(),
@@ -32,7 +32,7 @@ internal static class ResultExtensions
     private static int GetStatusCode(this ErrorType errorType) =>
         errorType switch
         {
-            ErrorType.Validation => StatusCodes.Status400BadRequest,
+            ErrorType.Problem => StatusCodes.Status400BadRequest,
             ErrorType.NotFound => StatusCodes.Status404NotFound,
             _ => StatusCodes.Status500InternalServerError
         };
@@ -40,7 +40,7 @@ internal static class ResultExtensions
     private static string GetTitle(this ErrorType errorType) =>
         errorType switch
         {
-            ErrorType.Validation => "Bad Request",
+            ErrorType.Problem => "Bad Request",
             ErrorType.NotFound => "Not Found",
             _ => "Internal Server Error"
         };
@@ -48,7 +48,7 @@ internal static class ResultExtensions
     private static string GetErrorType(this ErrorType errorType) =>
         errorType switch
         {
-            ErrorType.Validation => "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1",
+            ErrorType.Problem => "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1",
             ErrorType.NotFound => "https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.4",
             _ => "https://datatracker.ietf.org/doc/html/rfc7231#section-6.6.1"
         };

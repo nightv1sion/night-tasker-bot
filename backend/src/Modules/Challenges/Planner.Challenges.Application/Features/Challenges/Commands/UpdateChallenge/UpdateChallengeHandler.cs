@@ -1,5 +1,5 @@
-using Challenges.Domain.Challenges.Errors;
-using Challenges.Domain.Challenges.Repositories;
+using Planner.Challenges.Domain.Challenges.Errors;
+using Planner.Challenges.Domain.Challenges.Repositories;
 using Planner.Common.Domain.Core.Primitives.Result;
 using Planner.Challenges.Application.Abstractions.Data;
 using Planner.Common.Application.Messaging;

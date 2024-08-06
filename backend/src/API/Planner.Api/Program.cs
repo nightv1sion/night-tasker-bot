@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Builder;
+using Planner.Api.Extensions;
+using Planner.Api.Middlewares;
 using Planner.Challenges.Infrastructure;
 using Planner.Challenges.Presentation;
 using Planner.Common.Application;
@@ -7,6 +10,9 @@ using Serilog;
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilog((context, loggerConfig) => loggerConfig.ReadFrom.Configuration(context.Configuration));
+
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options => 
@@ -28,8 +34,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.ApplyMigrations();
+
 ChallengesModule.MapEndpoints(app);
 
 app.UseSerilogRequestLogging();
+
+app.UseExceptionHandler();
 
 app.Run();

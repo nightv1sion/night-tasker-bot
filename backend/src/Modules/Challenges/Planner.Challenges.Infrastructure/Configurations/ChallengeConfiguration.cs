@@ -1,6 +1,6 @@
-﻿using Challenges.Domain.Challenges.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Planner.Challenges.Domain.Challenges.Entities;
 
 namespace Planner.Challenges.Infrastructure.Configurations;
 
@@ -24,5 +24,5 @@ internal sealed class ChallengeConfiguration : IEntityTypeConfiguration<Challeng
         builder.HasIndex(entity => entity.UserId);
     }
 
-    public const string TableName = "challenges";
+    public const string TableName = "challenges.challenges";
 }

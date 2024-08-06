@@ -1,4 +1,4 @@
-using Challenges.Domain.Challenges.Repositories;
+using Planner.Challenges.Domain.Challenges.Repositories;
 using Planner.Common.Application.Messaging;
 using Planner.Challenges.Application.Features.Challenges.Models;
 

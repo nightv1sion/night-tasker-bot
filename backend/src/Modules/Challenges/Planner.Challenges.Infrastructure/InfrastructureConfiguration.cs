@@ -14,11 +14,12 @@ namespace Planner.Challenges.Infrastructure;
 public static class InfrastructureConfiguration
 {
     public static IServiceCollection AddInfrastructure(
-        this IServiceCollection services, IConfiguration configuration)
+        this IServiceCollection services,
+        IConfiguration configuration)
     {
         string? databaseConnectionString = configuration.GetConnectionString(ConnectionString.SettingsKey);
 
-        services.AddDbContext<ApplicationDbContext>(options =>
+        services.AddDbContext<ChallengesDbContext>(options =>
             options
                 .UseNpgsql(
                     databaseConnectionString,
@@ -48,7 +49,7 @@ public static class InfrastructureConfiguration
     public static void EnsureDatabaseCreated(this IServiceProvider serviceProvider)
     {
         using IServiceScope scope = serviceProvider.CreateScope();
-        ApplicationDbContext dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        ChallengesDbContext dbContext = scope.ServiceProvider.GetRequiredService<ChallengesDbContext>();
         dbContext.Database.Migrate();
     }
 }

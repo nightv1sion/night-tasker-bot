@@ -1,4 +1,4 @@
-using Challenges.Domain.ChallengeMessages.Entities;
+using Planner.Challenges.Domain.ChallengeMessages.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -28,5 +28,5 @@ internal sealed class ChallengeMessageConfiguration : IEntityTypeConfiguration<C
             .HasForeignKey(x => x.ChallengeId);
     }
 
-    public const string TableName = "challenge_messages";
+    public const string TableName = "challenges.challenge_messages";
 }

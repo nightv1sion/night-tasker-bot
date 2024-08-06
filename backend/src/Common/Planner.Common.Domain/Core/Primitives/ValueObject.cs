@@ -1,63 +1,40 @@
-﻿namespace Planner.Common.Domain.Core.Primitives;
+﻿using System.Diagnostics.CodeAnalysis;
 
-public abstract class ValueObject : IEquatable<ValueObject>
+namespace Planner.Common.Domain.Core.Primitives;
+
+public abstract class ValueObject : IEqualityComparer<ValueObject>
 {
-    public static bool operator ==(ValueObject? a, ValueObject? b)
+    protected abstract IEnumerable<object> GetAtomicValues();
+
+    public bool Equals(ValueObject? x, ValueObject? y)
     {
-        if (a is null && b is null)
+        if (x is null && y is null)
         {
             return true;
         }
 
-        if (a is null || b is null)
+        if (x is null || y is null)
         {
             return false;
         }
 
-        return a.Equals(b);
-    }
-
-    public static bool operator !=(ValueObject? a, ValueObject? b)
-    {
-        return !(a == b);
-    }
-
-    public bool Equals(ValueObject? other)
-    {
-        return !(other is null) && GetAtomicValues().SequenceEqual(other.GetAtomicValues());
-    }
-
-    public override bool Equals(object? obj)
-    {
-        if (obj is null)
+        if (x.GetType() != y.GetType())
         {
             return false;
         }
 
-        if (GetType() != obj.GetType())
-        {
-            return false;
-        }
-
-        if (obj is not ValueObject valueObject)
-        {
-            return false;
-        }
-
-        return GetAtomicValues().SequenceEqual(valueObject.GetAtomicValues());
+        return x.GetAtomicValues().SequenceEqual(y.GetAtomicValues());
     }
 
-    public override int GetHashCode()
+    public int GetHashCode([DisallowNull] ValueObject obj)
     {
         HashCode hashCode = default;
 
-        foreach (var obj in GetAtomicValues())
+        foreach (object atomicValue in obj.GetAtomicValues())
         {
-            hashCode.Add(obj);
+            hashCode.Add(atomicValue);
         }
 
         return hashCode.ToHashCode();
     }
-
-    protected abstract IEnumerable<object> GetAtomicValues();
 }

@@ -53,4 +53,10 @@ public class Result<TValue> : Result
     public TValue Value => IsSuccess
         ? _value
         : throw new InvalidOperationException("The value of a failure result can not be accessed.");
+
+    public static implicit operator Result<TValue>(TValue? value) =>
+        value is not null ? Success(value) : Failure<TValue>(Error.NullValue);
+
+    public static Result<TValue> ValidationFailure(Error error) =>
+        new(default, false, error);
 }

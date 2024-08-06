@@ -9,10 +9,10 @@ using Planner.Challenges.Infrastructure;
 
 #nullable disable
 
-namespace TaskTracker.Infrastructure.Persistence.Migrations
+namespace Planner.Challenges.Infrastructure.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240609115205_Initial")]
+    [DbContext(typeof(ChallengesDbContext))]
+    [Migration("20240806200917_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -20,12 +20,13 @@ namespace TaskTracker.Infrastructure.Persistence.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.2")
+                .HasDefaultSchema("challenges")
+                .HasAnnotation("ProductVersion", "8.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("TaskTracker.Core.Domain.ChallengeMessages.Entities.ChallengeMessage", b =>
+            modelBuilder.Entity("Planner.Challenges.Domain.ChallengeMessages.Entities.ChallengeMessage", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -54,10 +55,10 @@ namespace TaskTracker.Infrastructure.Persistence.Migrations
                         .IsUnique()
                         .HasDatabaseName("ix_challenge_messages_message_id");
 
-                    b.ToTable("challenge_messages", (string)null);
+                    b.ToTable("challenge_messages", "challenges");
                 });
 
-            modelBuilder.Entity("TaskTracker.Core.Domain.Challenges.Entities.Challenge", b =>
+            modelBuilder.Entity("Planner.Challenges.Domain.Challenges.Entities.Challenge", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -83,12 +84,12 @@ namespace TaskTracker.Infrastructure.Persistence.Migrations
                     b.HasIndex("UserId")
                         .HasDatabaseName("ix_challenges_user_id");
 
-                    b.ToTable("challenges", (string)null);
+                    b.ToTable("challenges", "challenges");
                 });
 
-            modelBuilder.Entity("TaskTracker.Core.Domain.ChallengeMessages.Entities.ChallengeMessage", b =>
+            modelBuilder.Entity("Planner.Challenges.Domain.ChallengeMessages.Entities.ChallengeMessage", b =>
                 {
-                    b.HasOne("TaskTracker.Core.Domain.Challenges.Entities.Challenge", "Challenge")
+                    b.HasOne("Planner.Challenges.Domain.Challenges.Entities.Challenge", "Challenge")
                         .WithMany()
                         .HasForeignKey("ChallengeId")
                         .OnDelete(DeleteBehavior.Cascade)

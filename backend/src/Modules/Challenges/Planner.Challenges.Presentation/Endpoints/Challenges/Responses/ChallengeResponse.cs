@@ -1,4 +1,4 @@
-using Challenges.Application.Features.Challenges.Models;
+using Planner.Challenges.Application.Features.Challenges.Models;
 
 namespace Planner.Challenges.Presentation.Endpoints.Challenges.Responses;
 

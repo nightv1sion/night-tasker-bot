@@ -1,4 +1,4 @@
-using Challenges.Domain.Challenges.Entities;
+using Planner.Challenges.Domain.Challenges.Entities;
 
 namespace Planner.Challenges.Application.Features.Challenges.Models;
 

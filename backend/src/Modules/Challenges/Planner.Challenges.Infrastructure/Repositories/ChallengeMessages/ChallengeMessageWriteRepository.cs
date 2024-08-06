@@ -3,7 +3,7 @@ using Planner.Challenges.Domain.ChallengeMessages.Repositories;
 
 namespace Planner.Challenges.Infrastructure.Repositories.ChallengeMessages;
 
-internal sealed class ChallengeMessageWriteRepository(ApplicationDbContext dbContext)
+internal sealed class ChallengeMessageWriteRepository(ChallengesDbContext dbContext)
     : GenericWriteRepository<ChallengeMessage>(dbContext), IChallengeMessageWriteRepository
 {
     public async Task InsertAsync(

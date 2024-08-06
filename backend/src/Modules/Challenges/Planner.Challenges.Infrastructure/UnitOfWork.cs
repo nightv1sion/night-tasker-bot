@@ -2,9 +2,9 @@
 
 namespace Planner.Challenges.Infrastructure;
 
-internal sealed class UnitOfWork(ApplicationDbContext dbContext) : IUnitOfWork
+internal sealed class UnitOfWork(ChallengesDbContext dbContext) : IUnitOfWork
 {
-    private readonly ApplicationDbContext _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+    private readonly ChallengesDbContext _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
 
     public Task<int> SaveChangesAsync(CancellationToken cancellationToken)
     {

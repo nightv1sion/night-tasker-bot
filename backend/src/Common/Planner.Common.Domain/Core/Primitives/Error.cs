@@ -1,14 +1,20 @@
 ﻿namespace Planner.Common.Domain.Core.Primitives;
 
-public sealed class Error
+public record Error
 {
+    public static readonly Error None = new(string.Empty, string.Empty, ErrorType.Failure);
+    public static readonly Error NullValue = new(
+        "General.Null",
+        "Null value was provided",
+        ErrorType.Failure);
+
     public string Message { get; private set; }
 
     public string Code { get; private set; }
 
     public ErrorType Type { get; set; }
 
-    private Error(string code, string message, ErrorType type)
+    public Error(string code, string message, ErrorType type)
     {
         Code = code;
         Message = message;
@@ -22,11 +28,16 @@ public sealed class Error
 
     public static Error Validation(string code, string message)
     {
-        return new Error(code, message, ErrorType.Validation);
+        return new Error(code, message, ErrorType.Problem);
     }
 
     public static Error NotFound(string code, string message)
     {
         return new Error(code, message, ErrorType.NotFound);
+    }
+
+    public static Error Problem(string code, string description)
+    {
+        return new Error(code, description, ErrorType.Problem);
     }
 }
