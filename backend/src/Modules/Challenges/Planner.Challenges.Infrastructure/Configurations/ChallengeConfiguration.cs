@@ -24,5 +24,5 @@ internal sealed class ChallengeConfiguration : IEntityTypeConfiguration<Challeng
         builder.HasIndex(entity => entity.UserId);
     }
 
-    public const string TableName = "challenges.challenges";
+    public const string TableName = "challenges";
 }

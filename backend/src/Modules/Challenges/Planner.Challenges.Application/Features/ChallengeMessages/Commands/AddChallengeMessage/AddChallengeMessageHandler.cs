@@ -4,6 +4,7 @@ using Planner.Challenges.Domain.Challenges.Errors;
 using Planner.Challenges.Domain.Challenges.Repositories;
 using Planner.Common.Domain.Core.Primitives.Result;
 using Planner.Challenges.Application.Abstractions.Data;
+using Planner.Challenges.Domain.Challenges.Entities;
 using Planner.Common.Application.Messaging;
 
 namespace Planner.Challenges.Application.Features.ChallengeMessages.Commands.AddChallengeMessage;
@@ -16,8 +17,8 @@ internal sealed class AddChallengeMessageHandler(
 {
     public async Task<Result> Handle(AddChallengeMessageCommand request, CancellationToken cancellationToken)
     {
-        var challengeIds = request.ChallengeMessages.Select(x => x.ChallengeId).ToArray();
-        var challenges = await ChallengeReadRepository.GetMapBy(
+        Guid[] challengeIds = request.ChallengeMessages.Select(x => x.ChallengeId).ToArray();
+        IReadOnlyCollection<Challenge> challenges = await ChallengeReadRepository.GetMapBy(
             challengeIds,
             request.UserId,
             cancellationToken);

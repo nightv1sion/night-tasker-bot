@@ -3,6 +3,7 @@ using Planner.Challenges.Domain.Challenges.Repositories;
 using Planner.Common.Domain.Core.Primitives.Result;
 using Planner.Common.Application.Messaging;
 using Planner.Challenges.Application.Features.Challenges.Models;
+using Planner.Challenges.Domain.Challenges.Entities;
 
 namespace Planner.Challenges.Application.Features.Challenges.Queries.GetChallengeByMessageId;
 
@@ -12,7 +13,7 @@ internal sealed class GetChallengeByMessageIdHandler(IChallengeReadRepository Ch
     public async Task<Result<ChallengeDto>> Handle(GetChallengeByMessageIdQuery request,
         CancellationToken cancellationToken)
     {
-        var challenge = await ChallengeReadRepository.TryGetByMessageIdAsync(request.MessageId, cancellationToken);
+        Challenge? challenge = await ChallengeReadRepository.TryGetByMessageIdAsync(request.MessageId, cancellationToken);
 
         if (challenge is null || challenge.UserId != request.UserId)
         {

@@ -12,7 +12,7 @@ internal sealed class ChallengeReadRepository(IDbConnectionFactory dbConnectionF
     public async Task<IReadOnlyCollection<Challenge>> GetUserChallengesAsync(int userId)
     {
         IEnumerable<Challenge> challenges = await _connection.QueryAsync<Challenge>(
-            @$"SELECT * FROM {ChallengeConfiguration.TableName}
+            @$"SELECT * FROM {Schemas.Challenges}.{ChallengeConfiguration.TableName}
             WHERE user_id = @userId", new { userId });
         return challenges.ToArray();
     }
@@ -23,7 +23,7 @@ internal sealed class ChallengeReadRepository(IDbConnectionFactory dbConnectionF
         CancellationToken cancellationToken)
     {
         IEnumerable<Challenge> challenges = await _connection.QueryAsync<Challenge>(
-            @$"SELECT * FROM {ChallengeConfiguration.TableName}
+            @$"SELECT * FROM {Schemas.Challenges}.{ChallengeConfiguration.TableName}
             WHERE id = ANY(@challengeIds) AND user_id = @userId", new { challengeIds, userId });
         return challenges.ToArray();
     }
@@ -32,8 +32,8 @@ internal sealed class ChallengeReadRepository(IDbConnectionFactory dbConnectionF
     {
         Challenge? challenge = await _connection.QueryFirstOrDefaultAsync<Challenge>(
             $"""
-             SELECT * FROM {ChallengeConfiguration.TableName} 
-                      WHERE id IN (SELECT challenge_id FROM {ChallengeMessageConfiguration.TableName} 
+             SELECT * FROM {Schemas.Challenges}.{ChallengeConfiguration.TableName} 
+                      WHERE id IN (SELECT challenge_id FROM {Schemas.Challenges}.{ChallengeMessageConfiguration.TableName} 
                                                        WHERE message_id = @messageId)
              """, new { messageId });
         return challenge;

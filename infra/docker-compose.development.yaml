@@ -23,21 +23,11 @@ services:
       ApiPaths__ApiGateway: $NIGHT_PLANNER_WEB_APP_API_PATH
 
   #backend
-  night-planner-api-gateway:
-    container_name: night-planner-api-gateway
+  night-planner-api:
+    container_name: night-planner-api
     build:
-      context: ../backend/api-gateway/NightPlanner.ApiGateway
-      dockerfile: NightPlanner.ApiGateway/Dockerfile
-    ports:
-      - "4000:8080"
-    environment:
-      Ocelot__Host: $NIGHT_PLANNER_API_GATEWAY_OCELOT_HOST
-
-  night-planner-task-tracker:
-    container_name: night-planner-task-tracker
-    build:
-      context: ../backend/microservices/task-tracker
-      dockerfile: TaskTracker.Presentation/TaskTracker.Presentation.Api/Dockerfile
+      context: ../backend/src
+      dockerfile: API/Planner.Api/Dockerfile
     ports:
       - "5001:8080"
     environment:

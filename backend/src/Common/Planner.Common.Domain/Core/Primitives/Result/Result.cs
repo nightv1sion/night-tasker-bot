@@ -58,5 +58,5 @@ public class Result<TValue> : Result
         value is not null ? Success(value) : Failure<TValue>(Error.NullValue);
 
     public static Result<TValue> ValidationFailure(Error error) =>
-        new(default, false, error);
+        new(default!, false, error);
 }

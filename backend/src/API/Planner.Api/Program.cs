@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Builder;
+using HealthChecks.UI.Client;
 using Planner.Api.Extensions;
 using Planner.Api.Middlewares;
 using Planner.Challenges.Infrastructure;
@@ -22,7 +22,16 @@ builder.Services.AddSwaggerGen(options =>
 
 builder.Services.AddApplication([Planner.Challenges.Application.AssemblyReference.Assembly]);
 
-builder.Services.AddInfrastructure(builder.Configuration.GetConnectionString("Database")!);
+string databaseConnectionString = builder.Configuration.GetConnectionString("Database")!;
+string redisConnectionString = builder.Configuration.GetConnectionString("Cache")!;
+
+builder.Services.AddInfrastructure(
+    databaseConnectionString,
+    redisConnectionString);
+
+builder.Services.AddHealthChecks()
+    .AddNpgSql(databaseConnectionString)
+    .AddRedis(redisConnectionString);
 
 builder.Services.AddChallengesModule(builder.Configuration);
 
@@ -37,6 +46,11 @@ if (app.Environment.IsDevelopment())
 app.ApplyMigrations();
 
 ChallengesModule.MapEndpoints(app);
+
+app.MapHealthChecks("health", new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions
+{
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
+});
 
 app.UseSerilogRequestLogging();
 

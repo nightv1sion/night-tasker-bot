@@ -22,21 +22,14 @@ services:
       ApiPaths__ApiGateway: $NIGHT_PLANNER_WEB_APP_API_PATH
 
   #backend
-  night-planner-api-gateway:
-    container_name: night-planner-api-gateway
-    image: ${DOCKER_REGISTRY}/night-planner-api-gateway:latest
-    ports:
-      - "4000:8080"
-    environment:
-      Ocelot__Host: $NIGHT_PLANNER_API_GATEWAY_OCELOT_HOST
 
-  night-planner-task-tracker:
-    container_name: night-planner-task-tracker
-    image: ${DOCKER_REGISTRY}/night-planner-task-tracker:latest
+  night-planner-api:
+    container_name: night-planner-api
+    image: ${DOCKER_REGISTRY}/night-planner-api:latest
     ports:
       - "5001:8080"
     environment:
-      ConnectionStrings__Database: $NIGHT_PLANNER_TASK_TRACKER_DATABASE_CONNECTION
+      ConnectionStrings__Database: $NIGHT_PLANNER_DATABASE_CONNECTION
 
 volumes:
   night-planner-postgres-data:

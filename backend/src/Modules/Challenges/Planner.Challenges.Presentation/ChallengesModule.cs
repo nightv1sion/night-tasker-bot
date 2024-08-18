@@ -19,8 +19,6 @@ public static class ChallengesModule
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        Common.Infrastructure.InfrastructureConfiguration.AddInfrastructure(services, configuration.GetConnectionString("Database")!);
-
         Infrastructure.InfrastructureConfiguration.AddInfrastructure(services, configuration);
 
         return services;

@@ -2,6 +2,7 @@ using Planner.Challenges.Domain.Challenges.Errors;
 using Planner.Challenges.Domain.Challenges.Repositories;
 using Planner.Common.Domain.Core.Primitives.Result;
 using Planner.Challenges.Application.Abstractions.Data;
+using Planner.Challenges.Domain.Challenges.Entities;
 using Planner.Common.Application.Messaging;
 
 namespace Planner.Challenges.Application.Features.Challenges.Commands.UpdateChallenge;
@@ -12,7 +13,7 @@ internal sealed class UpdateChallengeHandler(
 {
     public async Task<Result> Handle(UpdateChallengeCommand request, CancellationToken cancellationToken)
     {
-        var challenge = await ChallengeWriteRepository.TryGetByIdAsync(request.ChallengeId, cancellationToken);
+        Challenge? challenge = await ChallengeWriteRepository.TryGetByIdAsync(request.ChallengeId, cancellationToken);
 
         if (challenge is null)
         {

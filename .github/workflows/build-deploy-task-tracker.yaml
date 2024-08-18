@@ -1,12 +1,12 @@
-name: "Build & Push Task Tracker"
+name: "Build & Push Planner Api"
 on:
   push:
     branches: ["master"]
-    paths: ["backend/microservices/task-tracker/**"]
+    paths: ["backend/src/**"]
   workflow_dispatch:
 jobs:
   build:
-    name: "Build & Publish Task Tracker Microservice"
+    name: "Build & Publish Planner Api"
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout repository"
@@ -22,18 +22,18 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_TOKEN }}
 
-      - name: "Build & Publish Task Tracker Microservice Image"
+      - name: "Build & Publish Planner Api Image"
         uses: docker/build-push-action@v4
         with:
-          context: ./backend/microservices/task-tracker
-          file: ./backend/microservices/task-tracker/TaskTracker.Presentation/TaskTracker.Presentation.Api/Dockerfile
+          context: ./backend/src
+          file: ./backend/src/API/Planner.Api/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_REGISTRY }}/night-planner-task-tracker:latest
+          tags: ${{ secrets.DOCKER_REGISTRY }}/night-planner-api:latest
           platforms: linux/amd64
           provenance: false
 
   deploy:
-    name: "Deploy Backend"
+    name: "Deploy Planner Api"
     runs-on: ubuntu-latest
     needs: build
     steps:
@@ -49,10 +49,10 @@ jobs:
 
             sudo docker login ${{ secrets.DOCKER_REGISTRY }} -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.REGISTRY_TOKEN }}
 
-            sudo docker pull ${{ secrets.DOCKER_REGISTRY }}/night-planner-task-tracker:latest
+            sudo docker pull ${{ secrets.DOCKER_REGISTRY }}/night-planner-api:latest
 
             cd ./docker
 
-            sudo docker compose -f docker-compose.yaml rm -s night-planner-task-tracker
+            sudo docker compose -f docker-compose.yaml rm -s night-planner-api
 
-            sudo docker compose -f docker-compose.yaml up night-planner-task-tracker -d
+            sudo docker compose -f docker-compose.yaml up night-planner-api -d

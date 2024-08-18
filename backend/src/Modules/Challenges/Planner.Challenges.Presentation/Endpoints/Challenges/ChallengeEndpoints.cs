@@ -31,6 +31,7 @@ public sealed class ChallengeEndpoints
     {
         var query = new GetUserChallengesQuery(userId);
         IReadOnlyCollection<ChallengeDto> result = await sender.Send(query, cancellationToken);
+
         return TypedResults.Ok(result);
     }
 

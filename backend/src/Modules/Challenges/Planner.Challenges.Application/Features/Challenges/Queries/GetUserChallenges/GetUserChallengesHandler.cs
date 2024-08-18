@@ -1,6 +1,7 @@
 using Planner.Challenges.Domain.Challenges.Repositories;
 using Planner.Common.Application.Messaging;
 using Planner.Challenges.Application.Features.Challenges.Models;
+using Planner.Challenges.Domain.Challenges.Entities;
 
 namespace Planner.Challenges.Application.Features.Challenges.Queries.GetUserChallenges;
 
@@ -11,7 +12,7 @@ internal sealed class GetUserChallengesHandler(IChallengeReadRepository Challeng
         GetUserChallengesQuery request,
         CancellationToken cancellationToken)
     {
-        var challenges = await ChallengeRepository.GetUserChallengesAsync(request.UserId);
+        IReadOnlyCollection<Challenge> challenges = await ChallengeRepository.GetUserChallengesAsync(request.UserId);
         return challenges
             .Select(ChallengeDto.FromEntity)
             .ToArray();
