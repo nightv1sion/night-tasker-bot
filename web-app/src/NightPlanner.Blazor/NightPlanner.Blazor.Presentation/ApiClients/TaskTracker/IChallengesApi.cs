@@ -11,4 +11,10 @@ public interface IChallengesApi
     
     [Get("/challenges")]
     Task<List<ChallengeResponse>> GetChallenges([Query] int userId, CancellationToken cancellationToken = default);
+    
+    [Post("/challenges/{challengeId}/reminders")]
+    Task AddChallengeReminder(
+        Guid challengeId,
+        [Body] AddChallengeReminderRequest request,
+        CancellationToken cancellationToken = default);
 }

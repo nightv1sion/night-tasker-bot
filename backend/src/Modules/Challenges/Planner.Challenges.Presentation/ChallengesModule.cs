@@ -1,25 +1,18 @@
-﻿using Microsoft.AspNetCore.Routing;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Planner.Challenges.Presentation.Endpoints.ChallengeMessages;
-using Planner.Challenges.Presentation.Endpoints.Challenges;
+using Planner.Common.Presentation.Endpoints;
 
 namespace Planner.Challenges.Presentation;
 
 public static class ChallengesModule
 {
-    public static void MapEndpoints(IEndpointRouteBuilder app)
-    {
-        ChallengeEndpoints.AddRoutes(app);
-        ChallengeMessageEndpoints.AddRoutes(app);
-    }
-
     public static IServiceCollection AddChallengesModule(
         this IServiceCollection services,
         IConfiguration configuration)
     {
         Infrastructure.InfrastructureConfiguration.AddInfrastructure(services, configuration);
+
+        services.AddEndpoints(AssemblyReference.Assembly);
 
         return services;
     }

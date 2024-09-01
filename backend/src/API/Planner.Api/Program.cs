@@ -5,6 +5,7 @@ using Planner.Challenges.Infrastructure;
 using Planner.Challenges.Presentation;
 using Planner.Common.Application;
 using Planner.Common.Infrastructure;
+using Planner.Common.Presentation.Endpoints;
 using Serilog;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -45,8 +46,6 @@ if (app.Environment.IsDevelopment())
 
 app.ApplyMigrations();
 
-ChallengesModule.MapEndpoints(app);
-
 app.MapHealthChecks("health", new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions
 {
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
@@ -55,5 +54,7 @@ app.MapHealthChecks("health", new Microsoft.AspNetCore.Diagnostics.HealthChecks.
 app.UseSerilogRequestLogging();
 
 app.UseExceptionHandler();
+
+app.MapEndpoints();
 
 app.Run();

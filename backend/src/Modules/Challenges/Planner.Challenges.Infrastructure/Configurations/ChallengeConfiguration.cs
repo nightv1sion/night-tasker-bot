@@ -22,6 +22,11 @@ internal sealed class ChallengeConfiguration : IEntityTypeConfiguration<Challeng
             .IsRequired();
 
         builder.HasIndex(entity => entity.UserId);
+
+        builder
+            .HasMany(entity => entity.Reminders)
+            .WithOne()
+            .HasForeignKey(entity => entity.ChallengeId);
     }
 
     public const string TableName = "challenges";

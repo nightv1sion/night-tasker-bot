@@ -1,10 +1,8 @@
-﻿using Planner.Common.Domain.Core.Primitives;
-
-namespace Planner.Common.Domain.Core.Primitives.Result;
+﻿namespace Planner.Common.Domain.Core.Primitives.Result;
 
 public class Result
 {
-    protected Result(bool isSuccess, Error? error)
+    protected Result(bool isSuccess, Error error)
     {
         if (isSuccess && error != null)
         {
@@ -17,21 +15,21 @@ public class Result
         }
 
         IsSuccess = isSuccess;
-        Error = error;
+        Error = error!;
     }
 
     public bool IsSuccess { get; set; }
 
     public bool IsFailure => !IsSuccess;
 
-    public Error? Error { get; set; }
+    public Error Error { get;}
 
     public static Result Success()
     {
-        return new Result(true, null);
+        return new Result(true, null!);
     }
 
-    public static Result<TValue> Success<TValue>(TValue value) => new(value, true, null);
+    public static Result<TValue> Success<TValue>(TValue value) => new(value, true, null!);
 
     public static Result Failure(Error error)
     {
@@ -45,7 +43,7 @@ public class Result<TValue> : Result
 {
     private readonly TValue _value;
 
-    protected internal Result(TValue value, bool isSuccess, Error? error) : base(isSuccess, error)
+    protected internal Result(TValue value, bool isSuccess, Error error) : base(isSuccess, error)
     {
         _value = value;
     }

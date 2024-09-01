@@ -16,4 +16,10 @@ public static class ChallengeErrors
         return Error.NotFound(ChallengeErrorCodes.ChallengeNotFound,
             $"{nameof(Challenge)} with ids: {string.Join(", ", challengeIds)} not found");
     }
+
+    public static Error ChallengeHasSameDateTimeReminder(DateTimeOffset remindAt)
+    {
+        return Error.Validation(ChallengeErrorCodes.ChallengeHasSameDateTimeReminder, 
+            $"{nameof(Challenge)} already has a reminder at {remindAt}");
+    }
 }

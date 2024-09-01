@@ -1,4 +1,6 @@
 @using NightPlanner.Blazor.Presentation.Models.Challenges
+@using NightPlanner.Blazor.Presentation.Components.Modals.Challenges
+
 <div>
     <Accordion>
         @foreach (var challenge in Challenges)
@@ -6,6 +8,9 @@
             <AccordionItem Title="@challenge.Name">
                 <Content>
                     @challenge.Description
+                    <div>
+                        <AddReminderModalForm Challenge="@challenge" OnReminderAdded="OnReminderAdded" />
+                    </div>
                 </Content>
             </AccordionItem>
         }
@@ -16,4 +21,9 @@
     [Parameter]
     [EditorRequired]
     public required IReadOnlyCollection<ChallengeDto> Challenges { get; set; }
+
+    private async Task OnReminderAdded()
+    {
+        
+    }
 }

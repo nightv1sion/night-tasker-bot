@@ -11,31 +11,20 @@ internal sealed class ChallengeReadRepository(IDbConnectionFactory dbConnectionF
 {
     public async Task<IReadOnlyCollection<Challenge>> GetUserChallengesAsync(int userId)
     {
-        IEnumerable<Challenge> challenges = await _connection.QueryAsync<Challenge>(
-            @$"SELECT * FROM {Schemas.Challenges}.{ChallengeConfiguration.TableName}
-            WHERE user_id = @userId", new { userId });
+        IEnumerable<Challenge> challenges = await _connection.QueryAsync<Challenge, ChallengeReminder, Challenge>(
+            @$"SELECT * FROM {Schemas.Challenges}.{ChallengeConfiguration.TableName} c
+            LEFT JOIN {Schemas.Challenges}.{ChallengeReminderConfiguration.TableName} cr on c.id = cr.challenge_id
+            WHERE c.user_id = @userId", (challenge, reminder) =>
+            {
+                if (reminder is not null)
+                {
+                    challenge.Reminders.Add(reminder);
+                }
+                
+                return challenge;
+            } ,
+            new { userId }
+            );
         return challenges.ToArray();
-    }
-
-    public async Task<IReadOnlyCollection<Challenge>> GetMapBy(
-        IReadOnlyCollection<Guid> challengeIds,
-        int userId,
-        CancellationToken cancellationToken)
-    {
-        IEnumerable<Challenge> challenges = await _connection.QueryAsync<Challenge>(
-            @$"SELECT * FROM {Schemas.Challenges}.{ChallengeConfiguration.TableName}
-            WHERE id = ANY(@challengeIds) AND user_id = @userId", new { challengeIds, userId });
-        return challenges.ToArray();
-    }
-
-    public async Task<Challenge?> TryGetByMessageIdAsync(int messageId, CancellationToken cancellationToken)
-    {
-        Challenge? challenge = await _connection.QueryFirstOrDefaultAsync<Challenge>(
-            $"""
-             SELECT * FROM {Schemas.Challenges}.{ChallengeConfiguration.TableName} 
-                      WHERE id IN (SELECT challenge_id FROM {Schemas.Challenges}.{ChallengeMessageConfiguration.TableName} 
-                                                       WHERE message_id = @messageId)
-             """, new { messageId });
-        return challenge;
     }
 }

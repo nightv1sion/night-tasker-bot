@@ -1,0 +1,64 @@
+@using NightPlanner.Blazor.Presentation.ApiClients.TaskTracker
+@using NightPlanner.Blazor.Presentation.ApiClients.TaskTracker.Requests
+@using NightPlanner.Blazor.Presentation.ApiServices.Contracts
+@using NightPlanner.Blazor.Presentation.Models.Challenges
+@inject ITelegramAuthenticationService TelegramAuthenticationService
+@inject IChallengesApi ChallengesApi
+
+<Modal @ref="modal" Title="@ModalTitle">
+    <BodyTemplate>
+        <div class="mb-3">
+            <DateInput TValue="DateTime" placeholder="Название плана" @bind="Reminder.RemindAt"/>
+        </div>
+    </BodyTemplate>
+    <FooterTemplate>
+        <Button Color="ButtonColor.Secondary" @onclick="OnHideModalClick">Отмена</Button>
+        <Button Color="ButtonColor.Primary" @onclick="CreateChallenge">Сохранить</Button>
+    </FooterTemplate>
+</Modal>
+
+<Button Color="ButtonColor.Primary" @onclick="OnShowModalClick">Добавить напоминание</Button>
+
+@code {
+    [Parameter]
+    [EditorRequired]
+    public required Func<Task> OnReminderAdded { get; set; }
+    
+    [Parameter]
+    [EditorRequired]
+    public required ChallengeDto Challenge { get; init; }
+
+    private string ModalTitle => $"Напоминание для {Challenge.Name}";
+
+    private Modal modal = default!;
+
+    public AddChallengeReminderDto Reminder { get; init; }
+    
+    private async Task OnShowModalClick()
+    {
+        await modal.ShowAsync();
+    }
+
+    private async Task OnHideModalClick()
+    {
+        await modal.HideAsync();
+    }
+
+    public sealed class AddChallengeReminderDto
+    {
+        public required DateTime RemindAt { get; set; }
+    }
+
+    private async Task CreateChallenge()
+    {
+        var userId = await TelegramAuthenticationService.GetTelegramUserId();
+
+        AddChallengeReminderRequest reminder = new(
+        userId,
+        Reminder.RemindAt);
+        
+        await ChallengesApi.AddChallengeReminder(Challenge.Id, reminder);
+        await OnReminderAdded();
+        await modal.HideAsync();
+    }
+}

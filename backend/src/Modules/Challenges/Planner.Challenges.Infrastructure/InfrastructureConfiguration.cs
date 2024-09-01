@@ -3,10 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Planner.Challenges.Application.Abstractions.Data;
-using Planner.Challenges.Domain.ChallengeMessages.Repositories;
 using Planner.Challenges.Domain.Challenges.Repositories;
 using Planner.Challenges.Infrastructure.Infrastructure;
-using Planner.Challenges.Infrastructure.Repositories.ChallengeMessages;
 using Planner.Challenges.Infrastructure.Repositories.Challenges;
 
 namespace Planner.Challenges.Infrastructure;
@@ -40,10 +38,7 @@ public static class InfrastructureConfiguration
     private static void RegisterRepositories(this IServiceCollection services)
     {
         services.AddScoped<IChallengeReadRepository, ChallengeReadRepository>();
-        services.AddScoped<IChallengeWriteRepository, ChallengeWriteRepository>();
-
-        services.AddScoped<IChallengeMessageReadRepository, ChallengeMessageReadRepository>();
-        services.AddScoped<IChallengeMessageWriteRepository, ChallengeMessageWriteRepository>();
+        services.AddScoped<IChallengeRepository, ChallengeRepository>();
     }
 
     public static void EnsureDatabaseCreated(this IServiceProvider serviceProvider)
