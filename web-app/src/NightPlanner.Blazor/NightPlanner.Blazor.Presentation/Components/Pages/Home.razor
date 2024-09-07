@@ -1,46 +1,43 @@
 ﻿@page "/"
-@using NightPlanner.Blazor.Presentation.ApiClients.TaskTracker
+@using NightPlanner.Blazor.Presentation.ApiClients.Plans
 @using NightPlanner.Blazor.Presentation.ApiServices.Contracts
-@using NightPlanner.Blazor.Presentation.Components.Modals.Challenges
+@using NightPlanner.Blazor.Presentation.Components.Modals.Plans
 @using NightPlanner.Blazor.Presentation.Components.Lists
-@using NightPlanner.Blazor.Presentation.Models.Challenges
+@using NightPlanner.Blazor.Presentation.Models.Plans
 @inject ITelegramAuthenticationService TelegramAuthenticationService
-@inject IChallengesApi ChallengesApi
+@inject IPlansApi PlansApi
 <PageTitle>Home</PageTitle>
 
 <div class="w-100 px-1">
         <div>
-            <ChallengesList Challenges="_challenges"/>
+            <PlansList Plans="_plans"/>
         </div>
 
         <div class="d-flex">
             <div class="mx-auto mt-2">
-                <CreateModalForm OnChallengeCreated="LoadChallenges"/>
+                <CreateModalForm OnPlanCreated="LoadPlans"/>
             </div>
         </div>
 </div>
 
 @code {
     [Inject]
-    protected PreloadService PreloadService { get; set; }
-    
-    private IReadOnlyCollection<ChallengeDto> _challenges = Array.Empty<ChallengeDto>();
+    private PreloadService PreloadService { get; set; } = null!;
 
-    private bool _challengesLoading = false;
+    private IReadOnlyCollection<PlanDto> _plans = Array.Empty<PlanDto>();
     
-    private async Task LoadChallenges()
+    private async Task LoadPlans()
     {
         var userId = await TelegramAuthenticationService.GetTelegramUserId();
         
         PreloadService.Show();
         
-        var challenges = await ChallengesApi.GetChallenges(userId);
-        _challenges = challenges
-            .Select(x => new ChallengeDto(x.Id, x.Name, x.Description))
+        var plans = await PlansApi.GetPlans(userId);
+        _plans = plans
+            .Select(x => new PlanDto(x.Id, x.Name, x.Description))
             .ToArray();
         
         PreloadService.Hide();
-
         
         StateHasChanged();
     }
@@ -51,7 +48,7 @@
 
         if (firstRender)
         {
-            await LoadChallenges();
+            await LoadPlans();
         }
     }
 

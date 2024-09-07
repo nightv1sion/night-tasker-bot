@@ -1,0 +1,64 @@
+@using NightPlanner.Blazor.Presentation.ApiClients.Plans
+@using NightPlanner.Blazor.Presentation.ApiClients.TaskTracker.Requests
+@using NightPlanner.Blazor.Presentation.ApiServices.Contracts
+@using NightPlanner.Blazor.Presentation.Models.Plans
+@inject ITelegramAuthenticationService TelegramAuthenticationService
+@inject IPlansApi PlansApi
+
+<Modal @ref="_modal" Title="Напоминание">
+    <BodyTemplate>
+        <div class="mb-3">
+            <InputDate 
+                Type="InputDateType.DateTimeLocal" 
+                @bind-Value="_reminder.RemindAt"/>
+        </div>
+    </BodyTemplate>
+    <FooterTemplate>
+        <Button Color="ButtonColor.Secondary" @onclick="OnHideModalClick">Отмена</Button>
+        <Button Color="ButtonColor.Primary" @onclick="AddReminder">Сохранить</Button>
+    </FooterTemplate>
+</Modal>
+
+<Button Color="ButtonColor.Primary" @onclick="OnShowModalClick">Добавить напоминание</Button>
+
+@code {
+    [Parameter]
+    [EditorRequired]
+    public required Func<Task> OnReminderAdded { get; set; }
+    
+    [Parameter]
+    [EditorRequired]
+    public required PlanDto Plan { get; set; }
+
+    // private string ModalTitle => $"Напоминание для {Plan.Name}";
+
+    private Modal _modal = default!;
+
+    private AddPlanReminderDto _reminder = new()
+    {
+        RemindAt = DateTime.Now,
+    };
+    
+    private async Task OnShowModalClick()
+    {
+        await _modal.ShowAsync();
+    }
+
+    private async Task OnHideModalClick()
+    {
+        await _modal.HideAsync();
+    }
+
+    private async Task AddReminder()
+    {
+        var userId = await TelegramAuthenticationService.GetTelegramUserId();
+
+        AddPlanReminderRequest reminder = new(
+        userId,
+        _reminder.RemindAt);
+        
+        await PlansApi.AddPlanReminder(Plan.Id, reminder);
+        await OnReminderAdded();
+        await _modal.HideAsync();
+    }
+}

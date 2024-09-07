@@ -1,0 +1,61 @@
+@using NightPlanner.Blazor.Presentation.ApiClients.Plans
+@using NightPlanner.Blazor.Presentation.ApiClients.TaskTracker.Requests
+@using NightPlanner.Blazor.Presentation.ApiServices.Contracts
+@inject ITelegramAuthenticationService TelegramAuthenticationService
+@inject IPlansApi PlansApi
+
+<Modal @ref="_modal" Title="Добавить план">
+    <BodyTemplate>
+        <div class="mb-3">
+            <input placeholder="Название плана" @bind="_plan.Name"/>
+        </div>
+        <div class="mb-3">
+            <input placeholder="Описание плана" @bind="_plan.Description"/>
+        </div>
+    </BodyTemplate>
+    <FooterTemplate>
+        <Button Color="ButtonColor.Secondary" @onclick="OnHideModalClick">Отмена</Button>
+        <Button Color="ButtonColor.Primary" @onclick="CreatePlan">Сохранить</Button>
+    </FooterTemplate>
+</Modal>
+
+<Button Color="ButtonColor.Primary" @onclick="OnShowModalClick">Добавить</Button>
+
+@code {
+    [Parameter]
+    public required Func<Task> OnPlanCreated { get; set; }
+
+    private Modal _modal = default!;
+
+    private CreatePlanDto _plan = new();
+    
+    private async Task OnShowModalClick()
+    {
+        await _modal.ShowAsync();
+    }
+
+    private async Task OnHideModalClick()
+    {
+        await _modal.HideAsync();
+    }
+
+    sealed class CreatePlanDto
+    {
+        public string? Name { get; set; }
+        
+        public string? Description { get; set; }
+    }
+
+    private async Task CreatePlan()
+    {
+        var plan = new CreatePlanRequest
+        {
+            UserId = await TelegramAuthenticationService.GetTelegramUserId(),
+            Name = _plan.Name!,
+            Description = _plan.Description
+        };
+        await PlansApi.CreatePlan(plan);
+        await OnPlanCreated();
+        await _modal.HideAsync();
+    }
+}

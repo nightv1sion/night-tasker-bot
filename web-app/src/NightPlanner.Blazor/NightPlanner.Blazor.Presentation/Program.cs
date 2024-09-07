@@ -1,4 +1,4 @@
-using NightPlanner.Blazor.Presentation.ApiClients.TaskTracker;
+using NightPlanner.Blazor.Presentation.ApiClients.Plans;
 using NightPlanner.Blazor.Presentation.ApiServices.Contracts;
 using NightPlanner.Blazor.Presentation.ApiServices.Implementations;
 using NightPlanner.Blazor.Presentation.Components;
@@ -8,12 +8,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
-    .AddInteractiveServerComponents();
+    .AddInteractiveServerComponents()
+    .AddCircuitOptions(x => x.DetailedErrors = true);
 
 builder.Services.AddScoped<IJsInteractor, JsInteractor>();
 builder.Services.AddScoped<ITelegramAuthenticationService, TelegramAuthenticationService>();
 
-builder.Services.AddRefitClient<IChallengesApi>()
+builder.Services.AddRefitClient<IPlansApi>()
     .ConfigureHttpClient(client => client.BaseAddress = new Uri(builder.Configuration["ApplicationSettings:ApiPath"]!));
 
 builder.Services.AddBlazorBootstrap();

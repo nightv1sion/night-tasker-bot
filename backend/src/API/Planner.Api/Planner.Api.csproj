@@ -30,7 +30,7 @@
 
 
 	<ItemGroup>
-    <ProjectReference Include="..\..\Modules\Challenges\Planner.Challenges.Presentation\Planner.Challenges.Presentation.csproj" />
+    <ProjectReference Include="..\..\Modules\Plans\Planner.Plans.Presentation\Planner.Plans.Presentation.csproj" />
   </ItemGroup>
 
 </Project>

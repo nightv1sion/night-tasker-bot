@@ -1,12 +1,14 @@
 using HealthChecks.UI.Client;
 using Planner.Api.Extensions;
 using Planner.Api.Middlewares;
-using Planner.Challenges.Infrastructure;
-using Planner.Challenges.Presentation;
+using Planner.Plans.Infrastructure;
+using Planner.Plans.Presentation;
 using Planner.Common.Application;
 using Planner.Common.Infrastructure;
 using Planner.Common.Presentation.Endpoints;
 using Serilog;
+
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +23,7 @@ builder.Services.AddSwaggerGen(options =>
     options.CustomSchemaIds(t => t.FullName?.Replace("+", "."));
 });
 
-builder.Services.AddApplication([Planner.Challenges.Application.AssemblyReference.Assembly]);
+builder.Services.AddApplication([Planner.Plans.Application.AssemblyReference.Assembly]);
 
 string databaseConnectionString = builder.Configuration.GetConnectionString("Database")!;
 string redisConnectionString = builder.Configuration.GetConnectionString("Cache")!;
@@ -34,7 +36,7 @@ builder.Services.AddHealthChecks()
     .AddNpgSql(databaseConnectionString)
     .AddRedis(redisConnectionString);
 
-builder.Services.AddChallengesModule(builder.Configuration);
+builder.Services.AddPlansModule(builder.Configuration);
 
 WebApplication app = builder.Build();
 

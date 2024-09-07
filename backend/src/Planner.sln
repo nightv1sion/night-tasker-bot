@@ -5,15 +5,15 @@ VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{352028B1-9BD1-4CB6-8897-81FFF2065415}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Challenges", "Challenges", "{FEF37303-6B23-41A3-A77F-6630A8A4515D}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plans", "Plans", "{FEF37303-6B23-41A3-A77F-6630A8A4515D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Planner.Challenges.Domain", "Modules\Challenges\Planner.Challenges.Domain\Planner.Challenges.Domain.csproj", "{2703DF72-6C7C-402A-9FEF-D7ABB6066C60}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Planner.Plans.Domain", "Modules\Plans\Planner.Plans.Domain\Planner.Plans.Domain.csproj", "{2703DF72-6C7C-402A-9FEF-D7ABB6066C60}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Planner.Challenges.Application", "Modules\Challenges\Planner.Challenges.Application\Planner.Challenges.Application.csproj", "{E03BFF88-6C46-45AB-8373-AD32AEA83A78}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Planner.Plans.Application", "Modules\Plans\Planner.Plans.Application\Planner.Plans.Application.csproj", "{E03BFF88-6C46-45AB-8373-AD32AEA83A78}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Planner.Challenges.Infrastructure", "Modules\Challenges\Planner.Challenges.Infrastructure\Planner.Challenges.Infrastructure.csproj", "{27137B49-20C6-4685-B83B-0FD93D749813}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Planner.Plans.Infrastructure", "Modules\Plans\Planner.Plans.Infrastructure\Planner.Plans.Infrastructure.csproj", "{27137B49-20C6-4685-B83B-0FD93D749813}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Planner.Challenges.Presentation", "Modules\Challenges\Planner.Challenges.Presentation\Planner.Challenges.Presentation.csproj", "{5F4248B5-C52F-41F2-B190-BEC5E6AD9591}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Planner.Plans.Presentation", "Modules\Plans\Planner.Plans.Presentation\Planner.Plans.Presentation.csproj", "{5F4248B5-C52F-41F2-B190-BEC5E6AD9591}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{9EA59FD0-34D9-4824-BBE1-46CC85B30A0E}"
 EndProject

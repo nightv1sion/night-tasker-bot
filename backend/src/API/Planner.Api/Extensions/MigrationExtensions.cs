@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Planner.Challenges.Infrastructure;
+using Planner.Plans.Infrastructure;
 
 namespace Planner.Api.Extensions;
 
@@ -9,7 +9,7 @@ internal static class MigrationExtensions
     {
         using IServiceScope scope = app.ApplicationServices.CreateScope();
 
-        ApplyMigration<ChallengesDbContext>(scope);
+        ApplyMigration<PlansDbContext>(scope);
     }
 
     private static void ApplyMigration<TDbContext>(IServiceScope scope)
