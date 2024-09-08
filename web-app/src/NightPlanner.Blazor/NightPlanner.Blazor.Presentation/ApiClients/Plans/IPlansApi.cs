@@ -1,5 +1,5 @@
-using NightPlanner.Blazor.Presentation.ApiClients.TaskTracker.Requests;
-using NightPlanner.Blazor.Presentation.ApiClients.TaskTracker.Responses;
+using NightPlanner.Blazor.Presentation.ApiClients.Plans.Requests;
+using NightPlanner.Blazor.Presentation.ApiClients.Plans.Responses;
 using Refit;
 
 namespace NightPlanner.Blazor.Presentation.ApiClients.Plans;
@@ -16,5 +16,11 @@ public interface IPlansApi
     Task AddPlanReminder(
         Guid planId,
         [Body] AddPlanReminderRequest request,
+        CancellationToken cancellationToken = default);
+    
+    [Delete("/plans/{planId}")]
+    Task DeletePlan(
+        Guid planId,
+        [Body] DeletePlanRequest request,
         CancellationToken cancellationToken = default);
 }

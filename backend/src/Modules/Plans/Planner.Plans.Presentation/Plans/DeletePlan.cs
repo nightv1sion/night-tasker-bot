@@ -6,38 +6,37 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Planner.Common.Domain.Core.Primitives.Result;
 using Planner.Common.Presentation.Endpoints;
-using Planner.Plans.Application.Plans.Commands.AddReminder;
+using Planner.Plans.Application.Plans.Commands.DeletePlan;
 using Planner.Plans.Presentation.Extensions;
 
 namespace Planner.Plans.Presentation.Plans;
 
-internal sealed class AddPlanReminder : IEndpoint
+internal sealed class DeletePlan : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPost("api/plans/{planId}/reminders", Endpoint);
+        app.MapDelete("api/plans/{planId:guid}", Endpoint);
     }
-
-    private static async Task<Results<ProblemHttpResult, Ok<Guid>>> Endpoint(
+    
+    private static async Task<Results<ProblemHttpResult, NoContent>> Endpoint(
         [FromRoute] Guid planId,
         [FromBody] Request request,
         [FromServices] ISender sender,
         CancellationToken cancellationToken)
     {
-        var command = new AddPlanReminderCommand(
+        var command = new DeletePlanCommand(
             request.UserId,
-            planId,
-            request.RemindAt);
+            planId);
 
-        Result<Guid> result = await sender.Send(command, cancellationToken);
+        Result result = await sender.Send(command, cancellationToken);
 
         if (result.IsFailure)
         {
             return result.ToProblemDetails();
         }
 
-        return TypedResults.Ok(result.Value);
+        return TypedResults.NoContent();
     }
-
-    internal sealed record Request(DateTimeOffset RemindAt, int UserId);
+    
+    internal sealed record Request(int UserId);
 }

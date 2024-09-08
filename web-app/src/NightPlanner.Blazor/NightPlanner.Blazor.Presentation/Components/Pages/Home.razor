@@ -1,16 +1,16 @@
 ﻿@page "/"
 @using NightPlanner.Blazor.Presentation.ApiClients.Plans
 @using NightPlanner.Blazor.Presentation.ApiServices.Contracts
-@using NightPlanner.Blazor.Presentation.Components.Modals.Plans
-@using NightPlanner.Blazor.Presentation.Components.Lists
 @using NightPlanner.Blazor.Presentation.Models.Plans
+@using NightPlanner.Blazor.Presentation.Components.Plans.Modals
+@using NightPlanner.Blazor.Presentation.Components.Plans.Lists
 @inject ITelegramAuthenticationService TelegramAuthenticationService
 @inject IPlansApi PlansApi
 <PageTitle>Home</PageTitle>
 
 <div class="w-100 px-1">
         <div>
-            <PlansList Plans="_plans"/>
+            <PlansList Plans="_plans" ReloadPlansCallback="LoadPlans" />
         </div>
 
         <div class="d-flex">

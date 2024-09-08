@@ -1,4 +1,4 @@
-namespace NightPlanner.Blazor.Presentation.ApiClients.TaskTracker.Requests;
+namespace NightPlanner.Blazor.Presentation.ApiClients.Plans.Requests;
 
 public sealed class CreatePlanRequest
 {

@@ -1,5 +1,5 @@
 @using NightPlanner.Blazor.Presentation.ApiClients.Plans
-@using NightPlanner.Blazor.Presentation.ApiClients.TaskTracker.Requests
+@using NightPlanner.Blazor.Presentation.ApiClients.Plans.Requests
 @using NightPlanner.Blazor.Presentation.ApiServices.Contracts
 @using NightPlanner.Blazor.Presentation.Models.Plans
 @inject ITelegramAuthenticationService TelegramAuthenticationService
@@ -19,7 +19,13 @@
     </FooterTemplate>
 </Modal>
 
-<Button Color="ButtonColor.Primary" @onclick="OnShowModalClick">Добавить напоминание</Button>
+<Button
+    Color="ButtonColor.Primary"
+    Size="ButtonSize.ExtraSmall"
+    Outline="true"
+    @onclick="OnShowModalClick">
+    Добавить напоминание
+</Button>
 
 @code {
     [Parameter]

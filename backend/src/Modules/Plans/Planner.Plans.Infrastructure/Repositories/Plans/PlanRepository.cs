@@ -11,7 +11,15 @@ internal sealed class PlanRepository(
     {
         return await DbContext
             .Set<Plan>()
-            .Include(plan => plan.Reminders)
             .FirstOrDefaultAsync(plan => plan.Id == planId, cancellationToken);
+    }
+
+    public async Task<Plan?> TryGetByAsync(Guid planId, int userId, CancellationToken cancellationToken)
+    {
+        return await DbContext
+            .Set<Plan>()
+            .Where(x => x.UserId == userId)
+            .Where(x => x.Id == planId)
+            .FirstOrDefaultAsync(cancellationToken);
     }
 }

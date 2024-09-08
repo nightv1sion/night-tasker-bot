@@ -1,4 +1,4 @@
-namespace NightPlanner.Blazor.Presentation.ApiClients.TaskTracker.Responses;
+namespace NightPlanner.Blazor.Presentation.ApiClients.Plans.Responses;
 
 public sealed class PlanResponse
 {

@@ -1,0 +1,43 @@
+@using NightPlanner.Blazor.Presentation.Models.Plans
+@using NightPlanner.Blazor.Presentation.Components.Plans.Modals
+
+<div>
+    <Accordion>
+        @foreach (var plan in Plans)
+        {
+            <AccordionItem Title="@plan.Name">
+                <Content>
+                    @plan.Description
+                    <div>
+                        <div>
+                            <AddReminderModalForm Plan="@plan" OnReminderAdded="OnReminderAdded" />
+                        </div>
+                        <div style="display: flex; justify-content: end">
+                            <PlanDeleter Plan="@plan" OnPlanDeleted="OnPlanDeleted"/>
+                        </div>
+                    </div>
+                </Content>
+            </AccordionItem>
+        }
+    </Accordion>
+</div>
+
+@code {
+    [Parameter]
+    [EditorRequired]
+    public required IReadOnlyCollection<PlanDto> Plans { get; set; } = [];
+    
+    [Parameter]
+    [EditorRequired]
+    public required Func<Task> ReloadPlansCallback { get; init; }
+
+    private async Task OnReminderAdded()
+    {
+        await ReloadPlansCallback.Invoke();
+    }
+
+    private async Task OnPlanDeleted()
+    {
+        await ReloadPlansCallback.Invoke();
+    }
+}

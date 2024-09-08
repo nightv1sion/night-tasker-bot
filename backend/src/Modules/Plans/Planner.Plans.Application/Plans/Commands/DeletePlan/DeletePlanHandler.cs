@@ -14,14 +14,17 @@ internal sealed class DeletePlanHandler(
 {
     public async Task<Result> Handle(DeletePlanCommand request, CancellationToken cancellationToken)
     {
-        Plan? Plan = await planRepository.TryGetByIdAsync(request.PlanId, cancellationToken);
+        Plan? plan = await planRepository.TryGetByAsync(
+            request.PlanId,
+            request.UserId,
+            cancellationToken);
 
-        if (Plan is null)
+        if (plan is null)
         {
             return Result.Failure(PlanErrors.PlanNotFound(request.PlanId));
         }
         
-        planRepository.Remove(Plan);
+        planRepository.Remove(plan);
         await unitOfWork.SaveChangesAsync(cancellationToken);
         return Result.Success();
     }

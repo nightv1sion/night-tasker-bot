@@ -6,6 +6,8 @@ public interface IPlanRepository
 {
     Task<Plan?> TryGetByIdAsync(Guid planId, CancellationToken cancellationToken);
 
+    Task<Plan?> TryGetByAsync(Guid planId, int userId, CancellationToken cancellationToken);
+
     Task InsertAsync(Plan entity, CancellationToken cancellationToken);
     
     void Update(Plan entity);

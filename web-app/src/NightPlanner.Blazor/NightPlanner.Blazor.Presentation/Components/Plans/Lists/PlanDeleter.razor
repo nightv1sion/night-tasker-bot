@@ -1,0 +1,40 @@
+@using NightPlanner.Blazor.Presentation.ApiClients.Plans
+@using NightPlanner.Blazor.Presentation.ApiClients.Plans.Requests
+@using NightPlanner.Blazor.Presentation.ApiServices.Contracts
+@using NightPlanner.Blazor.Presentation.Models.Plans
+
+@inject ITelegramAuthenticationService TelegramAuthenticationService
+@inject IPlansApi PlansApi
+
+
+<Button 
+    Size="ButtonSize.ExtraSmall"
+    Color="ButtonColor.Danger"
+    Outline="true"
+    @onclick="HandleDelete">
+    Удалить
+</Button>
+
+
+@code {
+    [Parameter]
+    [EditorRequired]
+    public required PlanDto Plan { get; init; }
+    
+    [Parameter]
+    public Func<Task>? OnPlanDeleted { get; init; }
+
+    private async Task HandleDelete()
+    {
+        var userId = await TelegramAuthenticationService.GetTelegramUserId();
+
+        await PlansApi.DeletePlan(
+            Plan.Id,
+            new DeletePlanRequest
+            {
+                UserId = userId
+            });
+
+        await OnPlanDeleted?.Invoke()!;
+    }
+}
