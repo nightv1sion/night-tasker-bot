@@ -39,6 +39,15 @@ internal sealed class GetUserPlans : IEndpoint
         public required string? Description { get; set; }
 
         public required int UserId { get; set; }
+
+        public required IReadOnlyCollection<ReminderModel> Reminders { get; set; }
+        
+        public sealed class ReminderModel 
+        {
+            public required Guid Id { get; init; }
+
+            public required DateTimeOffset RemindAt { get; init; }
+        }
         
         public static Response FromDto(PlanDto dto)
         {
@@ -47,7 +56,14 @@ internal sealed class GetUserPlans : IEndpoint
                 Id = dto.Id,
                 Name = dto.Name,
                 Description = dto.Description,
-                UserId = dto.UserId
+                UserId = dto.UserId,
+                Reminders = dto.Reminders
+                    .Select(x => new ReminderModel
+                    {
+                        Id = x.Id,
+                        RemindAt = x.RemindAt
+                    })
+                    .ToArray()
             };
         }
     }

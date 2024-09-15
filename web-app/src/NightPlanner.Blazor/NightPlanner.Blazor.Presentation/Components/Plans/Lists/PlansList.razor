@@ -1,3 +1,4 @@
+@using System.Globalization
 @using NightPlanner.Blazor.Presentation.Models.Plans
 @using NightPlanner.Blazor.Presentation.Components.Plans.Modals
 
@@ -8,6 +9,13 @@
             <AccordionItem Title="@plan.Name">
                 <Content>
                     @plan.Description
+                    @foreach (var reminder in plan.Reminders)
+                    {
+                        var remindAt = reminder.RemindAt.ToLocalTime().ToString("f" ;
+                        <div style="font-size: 12px;">
+                            @remindAt
+                        </div>
+                    }
                     <div>
                         <div>
                             <AddReminderModalForm Plan="@plan" OnReminderAdded="OnReminderAdded" />

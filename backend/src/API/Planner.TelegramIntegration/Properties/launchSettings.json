@@ -1,0 +1,15 @@
+{
+  "profiles": {
+    "Planner.TelegramIntegration": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker",
+      "publishAllPorts": true,
+      "useSSL": true
+    }
+  }
+}

@@ -34,7 +34,13 @@
         
         var plans = await PlansApi.GetPlans(userId);
         _plans = plans
-            .Select(x => new PlanDto(x.Id, x.Name, x.Description))
+            .Select(x => new PlanDto(
+                x.Id,
+                x.Name,
+                x.Description,
+                x.Reminders
+                    .Select(reminder => new PlanDto.ReminderModel(reminder.Id, reminder.RemindAt))
+                     .ToArray()))
             .ToArray();
         
         PreloadService.Hide();

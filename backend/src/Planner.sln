@@ -37,6 +37,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Planner.Common.Infrastructu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Planner.Common.Presentation", "Common\Planner.Common.Presentation\Planner.Common.Presentation.csproj", "{A3D562BA-7342-49D8-9DC4-297C9BCFE2DA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Planner.TelegramIntegration", "API\Planner.TelegramIntegration\Planner.TelegramIntegration.csproj", "{05D87D37-043B-4F19-83CF-25A64D08FAD5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,10 @@ Global
 		{A3D562BA-7342-49D8-9DC4-297C9BCFE2DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3D562BA-7342-49D8-9DC4-297C9BCFE2DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3D562BA-7342-49D8-9DC4-297C9BCFE2DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05D87D37-043B-4F19-83CF-25A64D08FAD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05D87D37-043B-4F19-83CF-25A64D08FAD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05D87D37-043B-4F19-83CF-25A64D08FAD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05D87D37-043B-4F19-83CF-25A64D08FAD5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -98,6 +104,7 @@ Global
 		{CE8E8837-349B-45A9-99AF-4D10AC7A5AD7} = {4C5BE2DF-3F7A-48DD-8AD8-F8FF18D702B7}
 		{78FAA1DD-1BE7-422A-A27C-C2E59C8E7B3F} = {4C5BE2DF-3F7A-48DD-8AD8-F8FF18D702B7}
 		{A3D562BA-7342-49D8-9DC4-297C9BCFE2DA} = {4C5BE2DF-3F7A-48DD-8AD8-F8FF18D702B7}
+		{05D87D37-043B-4F19-83CF-25A64D08FAD5} = {A06C3307-70EB-430E-8049-7FBE19916A0B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C00C1561-5A58-4861-9660-C9693EC7A80D}
