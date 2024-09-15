@@ -31,6 +31,7 @@
 
 	<ItemGroup>
     <ProjectReference Include="..\..\Modules\Plans\Planner.Plans.Presentation\Planner.Plans.Presentation.csproj" />
+    <ProjectReference Include="..\Planner.TelegramIntegration\Planner.TelegramIntegration.csproj" />
   </ItemGroup>
 
 </Project>

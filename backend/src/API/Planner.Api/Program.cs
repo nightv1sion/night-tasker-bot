@@ -6,6 +6,7 @@ using Planner.Plans.Presentation;
 using Planner.Common.Application;
 using Planner.Common.Infrastructure;
 using Planner.Common.Presentation.Endpoints;
+using Planner.TelegramIntegration;
 using Serilog;
 
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
@@ -36,7 +37,9 @@ builder.Services.AddHealthChecks()
     .AddNpgSql(databaseConnectionString)
     .AddRedis(redisConnectionString);
 
-builder.Services.AddPlansModule(builder.Configuration);
+builder.Services
+    .AddPlansModule(builder.Configuration)
+    .AddTelegramIntegrationModule(builder.Configuration);
 
 WebApplication app = builder.Build();
 

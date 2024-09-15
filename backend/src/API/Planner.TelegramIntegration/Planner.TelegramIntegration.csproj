@@ -1,24 +1,16 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
+<PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-        <UserSecretsId>83ea0939-143a-4cb0-bd93-76083cc6c235</UserSecretsId>
-        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-        <DockerfileContext>..\..</DockerfileContext>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
         <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
         <PackageReference Include="Telegram.Bot" Version="21.7.1" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Content Include="..\..\.dockerignore">
-        <Link>.dockerignore</Link>
-      </Content>
+        <FrameworkReference Include="Microsoft.AspNetCore.App" />
     </ItemGroup>
 
 </Project>

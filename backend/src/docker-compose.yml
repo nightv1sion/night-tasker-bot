@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   planner.api:
-    image: ${DOCKER_REGISTRY-}planner-api
+    image: planner-api
     container_name: Planner.Api
     build:
       context: .
@@ -10,13 +10,6 @@ services:
     ports:
       - 5000:8080
       - 5001:8081
-
-  planner.telegram-integration:
-    image: ${DOCKER_REGISTRY-}planner-telegram-integration
-    container_name: Planner.TelegramIntegration
-    build:
-      context: .
-      dockerfile: API/Planner.TelegramIntegration/Dockerfile
 
   planner.database:
     image: postgres:latest
