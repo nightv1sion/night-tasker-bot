@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Planner.Common.Domain.Core.Primitives.Result;
 using Planner.Common.Presentation.Endpoints;
-using Planner.Plans.Application.Plans.Commands.DeletePlan;
+using Planner.Plans.Application.Plans.DeletePlan;
 using Planner.Plans.Presentation.Extensions;
 
 namespace Planner.Plans.Presentation.Plans;

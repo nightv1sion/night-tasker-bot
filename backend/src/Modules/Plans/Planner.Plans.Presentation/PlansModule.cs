@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using MassTransit;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Planner.Common.Presentation.Endpoints;
 using Planner.Plans.Infrastructure;
@@ -16,5 +17,10 @@ public static class PlansModule
         services.AddEndpoints(AssemblyReference.Assembly);
 
         return services;
+    }
+
+    public static void ConfigureConsumers(IRegistrationConfigurator registrationConfigurator)
+    {
+        registrationConfigurator.AddConsumers(AssemblyReference.Assembly);
     }
 }

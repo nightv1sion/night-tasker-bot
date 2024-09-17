@@ -9,6 +9,7 @@
     <ItemGroup>
         <ProjectReference Include="..\..\..\Common\Planner.Common.Application\Planner.Common.Application.csproj" />
         <ProjectReference Include="..\Planner.Plans.Domain\Planner.Plans.Domain.csproj" />
+        <ProjectReference Include="..\Planner.Plans.IntegrationEvents\Planner.Plans.IntegrationEvents.csproj" />
     </ItemGroup>
 
 </Project>

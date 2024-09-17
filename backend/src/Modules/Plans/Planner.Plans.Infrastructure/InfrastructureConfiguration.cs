@@ -2,8 +2,9 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Planner.Plans.Application.Abstractions.Data;
+using Planner.Plans.Application;
 using Planner.Plans.Domain.Plans.Repositories;
+using Planner.Plans.Infrastructure.Configurations;
 using Planner.Plans.Infrastructure.Infrastructure;
 using Planner.Plans.Infrastructure.Repositories.Plans;
 
@@ -22,7 +23,7 @@ public static class InfrastructureConfiguration
                 .UseNpgsql(
                     databaseConnectionString,
                     npgsqlOptions => npgsqlOptions
-                        .MigrationsHistoryTable(HistoryRepository.DefaultTableName, "plans"))
+                        .MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Plans))
                 .UseSnakeCaseNamingConvention()
                 .AddInterceptors());
 

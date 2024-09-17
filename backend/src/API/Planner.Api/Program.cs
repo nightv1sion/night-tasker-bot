@@ -5,7 +5,9 @@ using Planner.Plans.Infrastructure;
 using Planner.Plans.Presentation;
 using Planner.Common.Application;
 using Planner.Common.Infrastructure;
+using Planner.Common.Infrastructure.Events;
 using Planner.Common.Presentation.Endpoints;
+using Planner.Notifications.Presentation;
 using Planner.TelegramIntegration;
 using Serilog;
 
@@ -24,12 +26,18 @@ builder.Services.AddSwaggerGen(options =>
     options.CustomSchemaIds(t => t.FullName?.Replace("+", "."));
 });
 
-builder.Services.AddApplication([Planner.Plans.Application.AssemblyReference.Assembly]);
+builder.Services.AddApplication([
+    Planner.Plans.Application.AssemblyReference.Assembly, 
+    Planner.Notifications.Application.AssemblyReference.Assembly]);
 
 string databaseConnectionString = builder.Configuration.GetConnectionString("Database")!;
 string redisConnectionString = builder.Configuration.GetConnectionString("Cache")!;
 
+RabbitMqSettings rabbitMqSettings = builder.Configuration.GetSection("RabbitMqSettings").Get<RabbitMqSettings>()!;
+
 builder.Services.AddInfrastructure(
+    [PlansModule.ConfigureConsumers, NotificationsModule.ConfigureConsumers],
+    rabbitMqSettings,
     databaseConnectionString,
     redisConnectionString);
 
@@ -39,6 +47,7 @@ builder.Services.AddHealthChecks()
 
 builder.Services
     .AddPlansModule(builder.Configuration)
+    .AddNotificationsModule(builder.Configuration)
     .AddTelegramIntegrationModule(builder.Configuration);
 
 WebApplication app = builder.Build();

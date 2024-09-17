@@ -1,4 +1,4 @@
-﻿using Planner.Plans.Application.Abstractions.Data;
+﻿using Planner.Plans.Application;
 
 namespace Planner.Plans.Infrastructure;
 

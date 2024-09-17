@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Planner.Common.Presentation.Endpoints;
-using Planner.Plans.Application.Plans.Commands.UpdatePlan;
+using Planner.Plans.Application.Plans.UpdatePlan;
 using Planner.Plans.Presentation.Extensions;
 
 namespace Planner.Plans.Presentation.Plans;
