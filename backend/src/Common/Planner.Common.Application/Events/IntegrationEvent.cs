@@ -8,6 +8,12 @@ public abstract class IntegrationEvent : IIntegrationEvent
         OccurredAt = occurredAt;
     }
 
+    protected IntegrationEvent()
+    {
+        Id = Guid.NewGuid();
+        OccurredAt = DateTimeOffset.UtcNow;
+    }
+
     public Guid Id { get; init; }
 
     public DateTimeOffset OccurredAt { get; init; }

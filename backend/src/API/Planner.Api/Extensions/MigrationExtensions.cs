@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Planner.Notifications.Infrastructure;
 using Planner.Plans.Infrastructure;
 
 namespace Planner.Api.Extensions;
@@ -10,6 +11,7 @@ internal static class MigrationExtensions
         using IServiceScope scope = app.ApplicationServices.CreateScope();
 
         ApplyMigration<PlansDbContext>(scope);
+        ApplyMigration<NotificationsDbContext>(scope);
     }
 
     private static void ApplyMigration<TDbContext>(IServiceScope scope)

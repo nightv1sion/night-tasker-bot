@@ -38,5 +38,5 @@ internal sealed class DeletePlan : IEndpoint
         return TypedResults.NoContent();
     }
     
-    internal sealed record Request(int UserId);
+    internal sealed record Request(long UserId);
 }

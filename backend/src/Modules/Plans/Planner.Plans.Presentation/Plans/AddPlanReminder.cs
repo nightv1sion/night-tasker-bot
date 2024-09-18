@@ -39,5 +39,5 @@ internal sealed class AddPlanReminder : IEndpoint
         return TypedResults.Ok(result.Value);
     }
 
-    internal sealed record Request(DateTimeOffset RemindAt, int UserId);
+    internal sealed record Request(DateTimeOffset RemindAt, long UserId);
 }

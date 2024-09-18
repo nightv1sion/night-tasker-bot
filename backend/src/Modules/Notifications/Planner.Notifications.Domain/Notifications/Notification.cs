@@ -6,22 +6,31 @@ public sealed class Notification : AggregateRoot
 {
     public required string Message { get; init; }
     
-    public required int DestinationUserId { get; init; }
+    public required long DestinationUserId { get; init; }
 
     public required DateTimeOffset ScheduledAt { get; init; }
 
     public DateTimeOffset? SentAt { get; set; }
 
+    public required Guid ExternalId { get; init; }
+
     public static Notification Schedule(
         string message,
-        int destinationUserId,
-        DateTimeOffset scheduledAt)
+        long destinationUserId,
+        DateTimeOffset scheduledAt,
+        Guid externalId)
     {
         return new Notification
         {
             Message = message,
             DestinationUserId = destinationUserId,
-            ScheduledAt = scheduledAt
+            ScheduledAt = scheduledAt,
+            ExternalId = externalId
         };
+    }
+
+    public void Send(DateTimeOffset sentAt)
+    {
+        SentAt = sentAt;
     }
 }

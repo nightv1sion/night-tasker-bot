@@ -16,6 +16,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\..\Common\Planner.Common.Infrastructure\Planner.Common.Infrastructure.csproj" />
+        <ProjectReference Include="..\..\TelegramIntegration\Planner.TelegramIntegration.PublicApi\Planner.TelegramIntegration.PublicApi.csproj" />
         <ProjectReference Include="..\Planner.Notifications.Application\Planner.Notifications.Application.csproj" />
     </ItemGroup>
 

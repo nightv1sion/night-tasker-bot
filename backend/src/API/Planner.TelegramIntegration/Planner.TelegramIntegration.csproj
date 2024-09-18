@@ -13,4 +13,8 @@
         <FrameworkReference Include="Microsoft.AspNetCore.App" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\Modules\TelegramIntegration\Planner.TelegramIntegration.PublicApi\Planner.TelegramIntegration.PublicApi.csproj" />
+    </ItemGroup>
+
 </Project>

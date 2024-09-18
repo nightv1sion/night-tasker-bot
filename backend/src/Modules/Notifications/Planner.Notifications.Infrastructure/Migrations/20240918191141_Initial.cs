@@ -21,14 +21,22 @@ namespace Planner.Notifications.Infrastructure.Migrations
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     message = table.Column<string>(type: "text", nullable: false),
-                    destination_user_id = table.Column<int>(type: "integer", nullable: false),
+                    destination_user_id = table.Column<long>(type: "bigint", nullable: false),
                     scheduled_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    sent_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true)
+                    sent_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    external_id = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("pk_notifications", x => x.id);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "ix_notifications_external_id",
+                schema: "notifications",
+                table: "notifications",
+                column: "external_id",
+                unique: true);
         }
 
         /// <inheritdoc />

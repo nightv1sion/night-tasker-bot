@@ -13,7 +13,7 @@ public sealed class Plan : AggregateRoot
     private Plan(
         string name,
         string? description,
-        int userId) : base(Guid.NewGuid())
+        long userId) : base(Guid.NewGuid())
     {
         Name = name;
         Description = description;
@@ -24,12 +24,12 @@ public sealed class Plan : AggregateRoot
 
     public string? Description { get; private set; }
 
-    public int UserId { get; private set; }
+    public long UserId { get; private set; }
 
     public List<PlanReminder> Reminders { get; private set; } = [];
     
 
-    public static Plan Create(string name, string? description, int userId)
+    public static Plan Create(string name, string? description, long userId)
     {
         return new Plan(name, description, userId);
     }
@@ -52,8 +52,16 @@ public sealed class Plan : AggregateRoot
         }
         
         var reminder = PlanReminder.Create(Id, remindAt);
+
+        AddDomainEvent(new PlanReminderCreatedDomainEvent(UserId, Name, remindAt, reminder.Id));
+        
         Reminders.Add(reminder);
 
         return Result.Success();
+    }
+
+    public void Remove()
+    {
+        AddDomainEvent(new PlanRemovedDomainEvent(Reminders.Select(x => x.Id).ToArray()));
     }
 }

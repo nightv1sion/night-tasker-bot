@@ -14,7 +14,8 @@ internal sealed class CreatePlanNotificationHandler(
         var notification = Notification.Schedule(
             notificationMessage,
             request.DestinationUserId,
-            request.ScheduledAt);
+            request.ScheduledAt,
+            request.ExternalId);
         
         await notificationRepository.InsertAsync(notification, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);

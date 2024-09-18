@@ -12,7 +12,7 @@ using Planner.Notifications.Infrastructure;
 namespace Planner.Notifications.Infrastructure.Migrations
 {
     [DbContext(typeof(NotificationsDbContext))]
-    [Migration("20240917205150_Initial")]
+    [Migration("20240918191141_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -33,9 +33,13 @@ namespace Planner.Notifications.Infrastructure.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    b.Property<int>("DestinationUserId")
-                        .HasColumnType("integer")
+                    b.Property<long>("DestinationUserId")
+                        .HasColumnType("bigint")
                         .HasColumnName("destination_user_id");
+
+                    b.Property<Guid>("ExternalId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("external_id");
 
                     b.Property<string>("Message")
                         .IsRequired()
@@ -52,6 +56,10 @@ namespace Planner.Notifications.Infrastructure.Migrations
 
                     b.HasKey("Id")
                         .HasName("pk_notifications");
+
+                    b.HasIndex("ExternalId")
+                        .IsUnique()
+                        .HasDatabaseName("ix_notifications_external_id");
 
                     b.ToTable("notifications", "notifications");
                 });

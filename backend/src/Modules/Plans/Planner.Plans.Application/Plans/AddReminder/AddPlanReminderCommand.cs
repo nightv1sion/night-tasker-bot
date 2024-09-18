@@ -4,6 +4,6 @@ using Planner.Common.Domain.Core.Primitives.Result;
 namespace Planner.Plans.Application.Plans.AddReminder;
 
 public sealed record AddPlanReminderCommand(
-    int UserId,
+    long UserId,
     Guid PlanId,
     DateTimeOffset RemindAt) : ICommand<Result<Guid>>;

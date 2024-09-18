@@ -6,4 +6,4 @@ namespace Planner.Plans.Application.Plans.CreatePlan;
 public sealed record CreatePlanCommand(
     string Name,
     string? Description,
-    int UserId) : ICommand<Result<Guid>>;
+    long UserId) : ICommand<Result<Guid>>;

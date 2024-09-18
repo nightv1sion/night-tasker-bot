@@ -39,8 +39,8 @@ namespace Planner.Plans.Infrastructure.Migrations
                         .HasColumnType("text")
                         .HasColumnName("name");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer")
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint")
                         .HasColumnName("user_id");
 
                     b.HasKey("Id")

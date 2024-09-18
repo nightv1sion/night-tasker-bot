@@ -27,6 +27,14 @@ internal sealed class NotificationConfiguration : IEntityTypeConfiguration<Notif
         builder
             .Property(entity => entity.SentAt)
             .IsRequired(false);
+
+        builder
+            .Property(entity => entity.ExternalId)
+            .IsRequired();
+
+        builder
+            .HasIndex(entity => entity.ExternalId)
+            .IsUnique();
     }
 
     public const string TableName = "notifications";

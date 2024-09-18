@@ -11,7 +11,7 @@
                     @plan.Description
                     @foreach (var reminder in plan.Reminders)
                     {
-                        var remindAt = reminder.RemindAt.ToLocalTime().ToString("f" ;
+                        var remindAt = reminder.RemindAt.ToLocalTime().ToString("f");
                         <div style="font-size: 12px;">
                             @remindAt
                         </div>

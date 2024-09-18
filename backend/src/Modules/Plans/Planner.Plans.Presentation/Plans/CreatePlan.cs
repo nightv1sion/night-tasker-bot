@@ -38,6 +38,6 @@ internal sealed class CreatePlan : IEndpoint
 
         public string? Description { get; init; }
 
-        public required int UserId { get; init; }
+        public required long UserId { get; init; }
     }
 }

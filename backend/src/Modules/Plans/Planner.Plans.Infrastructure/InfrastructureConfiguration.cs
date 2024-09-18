@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Planner.Common.Infrastructure.Persistence.Interceptors;
 using Planner.Plans.Application;
 using Planner.Plans.Domain.Plans.Repositories;
 using Planner.Plans.Infrastructure.Configurations;
@@ -18,14 +19,14 @@ public static class InfrastructureConfiguration
     {
         string? databaseConnectionString = configuration.GetConnectionString(ConnectionString.SettingsKey);
 
-        services.AddDbContext<PlansDbContext>(options =>
+        services.AddDbContext<PlansDbContext>((serviceProvider, options) =>
             options
                 .UseNpgsql(
                     databaseConnectionString,
                     npgsqlOptions => npgsqlOptions
                         .MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Plans))
                 .UseSnakeCaseNamingConvention()
-                .AddInterceptors());
+                .AddInterceptors(serviceProvider.GetRequiredService<PublishDomainEventsInterceptor>()));
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -40,12 +41,5 @@ public static class InfrastructureConfiguration
     {
         services.AddScoped<IPlanReadRepository, PlanReadRepository>();
         services.AddScoped<IPlanRepository, PlanRepository>();
-    }
-
-    public static void EnsureDatabaseCreated(this IServiceProvider serviceProvider)
-    {
-        using IServiceScope scope = serviceProvider.CreateScope();
-        PlansDbContext dbContext = scope.ServiceProvider.GetRequiredService<PlansDbContext>();
-        dbContext.Database.Migrate();
     }
 }

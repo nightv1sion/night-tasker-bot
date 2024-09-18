@@ -1,6 +1,9 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Planner.TelegramIntegration.Abstract;
+using Planner.TelegramIntegration.Public;
+using Planner.TelegramIntegration.PublicApi;
 using Planner.TelegramIntegration.Services;
 using Telegram.Bot;
 
@@ -26,6 +29,8 @@ public static class TelegramIntegrationModule
         services.AddScoped<UpdateHandler>();
         services.AddScoped<ReceiverService>();
         services.AddHostedService<PollingService>();
+        services.AddScoped<IMessageSender, MessageSender>();
+        services.AddScoped<ITelegramIntegrationApi, TelegramIntegrationApi>();
         return services;
     }
 }

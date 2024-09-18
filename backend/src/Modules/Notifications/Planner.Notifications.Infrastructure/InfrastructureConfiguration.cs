@@ -3,10 +3,14 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Planner.Notifications.Application;
+using Planner.Notifications.Application.Abstractions;
 using Planner.Notifications.Domain.Notifications;
 using Planner.Notifications.Infrastructure.Configurations;
 using Planner.Notifications.Infrastructure.Infrastructure;
+using Planner.Notifications.Infrastructure.Notifications;
 using Planner.Notifications.Infrastructure.Repositories.Notifications;
+using Planner.Notifications.Infrastructure.Telegram;
+using Quartz;
 
 namespace Planner.Notifications.Infrastructure;
 
@@ -28,6 +32,12 @@ public static class InfrastructureConfiguration
                 .AddInterceptors());
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<ITelegramNotificator, TelegramNotificator>();
+
+        services.AddQuartz(configurator =>
+        {
+            configurator.RegisterCheckScheduledNotificationsJob();
+        });
 
         services.RegisterRepositories();
 
@@ -39,12 +49,5 @@ public static class InfrastructureConfiguration
     private static void RegisterRepositories(this IServiceCollection services)
     {
         services.AddScoped<INotificationRepository, NotificationRepository>();
-    }
-
-    public static void EnsureDatabaseCreated(this IServiceProvider serviceProvider)
-    {
-        using IServiceScope scope = serviceProvider.CreateScope();
-        NotificationsDbContext dbContext = scope.ServiceProvider.GetRequiredService<NotificationsDbContext>();
-        dbContext.Database.Migrate();
     }
 }

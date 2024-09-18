@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Planner.Common.Presentation.Endpoints;
+using Planner.Notifications.Application;
 using Planner.Notifications.Infrastructure;
 
 namespace Planner.Notifications.Presentation;
@@ -12,6 +13,7 @@ public static class NotificationsModule
         this IServiceCollection services,
         IConfiguration configuration)
     {
+        services.AddApplication();
         services.AddInfrastructure(configuration);
 
         services.AddEndpoints(AssemblyReference.Assembly);

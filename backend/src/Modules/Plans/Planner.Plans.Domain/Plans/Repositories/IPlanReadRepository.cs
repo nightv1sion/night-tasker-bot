@@ -4,5 +4,5 @@ namespace Planner.Plans.Domain.Plans.Repositories;
 
 public interface IPlanReadRepository
 {
-    Task<IReadOnlyCollection<Plan>> GetUserPlansAsync(int userId);
+    Task<IReadOnlyCollection<Plan>> GetUserPlansAsync(long userId);
 }

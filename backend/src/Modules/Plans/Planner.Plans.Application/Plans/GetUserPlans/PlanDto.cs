@@ -6,7 +6,7 @@ public sealed record PlanDto(
     Guid Id,
     string Name,
     string? Description,
-    int UserId,
+    long UserId,
     IReadOnlyCollection<PlanDto.ReminderModel> Reminders)
 {
     public sealed record ReminderModel(

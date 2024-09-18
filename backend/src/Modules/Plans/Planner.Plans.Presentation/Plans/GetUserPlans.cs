@@ -17,7 +17,7 @@ internal sealed class GetUserPlans : IEndpoint
     }
     
     private static async Task<Ok<IReadOnlyCollection<Response>>> Endpoint(
-        [FromQuery] int userId,
+        [FromQuery] long userId,
         [FromServices] ISender sender,
         CancellationToken cancellationToken)
     {
@@ -37,7 +37,7 @@ internal sealed class GetUserPlans : IEndpoint
 
         public required string? Description { get; set; }
 
-        public required int UserId { get; set; }
+        public required long UserId { get; set; }
 
         public required IReadOnlyCollection<ReminderModel> Reminders { get; set; }
         

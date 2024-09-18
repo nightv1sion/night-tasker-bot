@@ -9,7 +9,7 @@ namespace Planner.Plans.Infrastructure.Repositories.Plans;
 internal sealed class PlanReadRepository(IDbConnectionFactory dbConnectionFactory)
     : GenericReadRepository<Plan>(dbConnectionFactory), IPlanReadRepository
 {
-    public async Task<IReadOnlyCollection<Plan>> GetUserPlansAsync(int userId)
+    public async Task<IReadOnlyCollection<Plan>> GetUserPlansAsync(long userId)
     {
         var plans = new Dictionary<Guid, Plan>();
         

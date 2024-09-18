@@ -7,6 +7,8 @@ using Planner.Common.Application.Events;
 using Planner.Common.Infrastructure.Abstractions;
 using Planner.Common.Infrastructure.Caching;
 using Planner.Common.Infrastructure.Events;
+using Planner.Common.Infrastructure.Persistence.Interceptors;
+using Quartz;
 using StackExchange.Redis;
 
 namespace Planner.Common.Infrastructure;
@@ -25,6 +27,10 @@ public static class InfrastructureConfiguration
         services.AddScoped<IDbConnectionFactory, DbConnectionFactory>();
         
         services.TryAddSingleton<IEventBus, EventBus>();
+        
+        services.TryAddSingleton<PublishDomainEventsInterceptor>();
+        
+        services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
         
         services.AddMassTransit(configure =>
         {
@@ -46,7 +52,6 @@ public static class InfrastructureConfiguration
                 cfg.ConfigureEndpoints(context);
             });
         });
-
 
         try
         {

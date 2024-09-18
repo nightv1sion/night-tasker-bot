@@ -23,8 +23,11 @@ internal sealed class DeletePlanHandler(
             return Result.Failure(PlanErrors.PlanNotFound(request.PlanId));
         }
         
+        plan.Remove();
+        
         planRepository.Remove(plan);
         await unitOfWork.SaveChangesAsync(cancellationToken);
+        
         return Result.Success();
     }
 }

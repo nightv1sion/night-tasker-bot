@@ -14,7 +14,7 @@ internal sealed class PlanRepository(
             .FirstOrDefaultAsync(plan => plan.Id == planId, cancellationToken);
     }
 
-    public async Task<Plan?> TryGetByAsync(Guid planId, int userId, CancellationToken cancellationToken)
+    public async Task<Plan?> TryGetByAsync(Guid planId, long userId, CancellationToken cancellationToken)
     {
         return await DbContext
             .Set<Plan>()
